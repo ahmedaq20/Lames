@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+/* 1. This line forces Tailwind to trigger 'dark:' utilities when the .dark class is present */
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-tajawal: 'Tajawal', sans-serif;
+
+  /* ============ Primary Color (اللون الأساسي - أزرق) ============ */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a5f;
+
+  /* ============ Accent Color (اللون المميز - بنفسجي) ============ */
+  --color-accent-400: #c084fc;
+  --color-accent-500: #a855f7;
+  --color-accent-600: #9333ea;
+
+  /* ============ Brand Color (لون البراند) ============ */
+  --color-brand: #0099FF;
+  --color-brand-light: #EAF6FF;
+
+  /* ============ Primary RGB (للظلال) ============ */
+  --color-primary-rgb: 37, 99, 235;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Primary palette */
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+
+  /* Accent palette */
+  --color-accent-400: var(--color-accent-400);
+  --color-accent-500: var(--color-accent-500);
+  --color-accent-600: var(--color-accent-600);
+
+  /* Brand */
+  --color-brand: var(--color-brand);
+  --color-brand-light: var(--color-brand-light);
+}
+
+/* 2. Changed from @media to .dark selector so manual toggling works */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-tajawal);
+  cursor: auto !important;
+}
+
+/* ============ Custom Quality Animations ============ */
+
+@keyframes liquid-morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes drift-x {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(20px); }
+}
+
+@keyframes float-diagonal {
+  0%, 100% { transform: translate(0px, 0px); }
+  50% { transform: translate(15px, -15px); }
+}
+
+.animate-liquid {
+  animation: liquid-morph 8s ease-in-out infinite;
+}
+
+.animate-scanline {
+  animation: scanline 3s linear infinite;
+}
+
+.animate-float-y {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-drift-x {
+  animation: drift-x 7s ease-in-out infinite;
+}
+
+.animate-float-diagonal {
+  animation: float-diagonal 8s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-subtle 4s ease-in-out infinite;
+}
+
+/* ============ Premium Noise Texture ============ */
+.bg-noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  opacity: 0.05;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  filter: contrast(120%) brightness(100%);
+}
+
+.dark .bg-noise {
+  opacity: 0.03;
+}
+
+/* ============ Custom Cursor Utilities ============ */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary-500);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transition: transform 0.1s ease-out, background 0.3s ease;
+}
+
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-primary-400);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease-out, border 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.cursor-hover .cursor-dot {
+  transform: scale(1.5);
+  background: var(--color-accent-500);
+}
+
+.cursor-hover .cursor-outline {
+  transform: scale(1.5);
+  border-color: var(--color-accent-400);
+  background: rgba(var(--color-primary-rgb), 0.1);
+  border-width: 0;
+}
+
+/* ============ Scrollytelling Loading Screen ============ */
+
+@keyframes loading-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes loading-bar-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes fade-out-up {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-30px); }
+}
+
+.scrollytelling-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scrollytelling-loading.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.scrollytelling-loading .loading-text {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  animation: loading-pulse 2s ease-in-out infinite;
+}
+
+.scrollytelling-loading .loading-percent {
+  font-size: 4rem;
+  font-weight: 200;
+  color: white;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.scrollytelling-loading .loading-bar-track {
+  width: 200px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.scrollytelling-loading .loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-accent-500));
+  border-radius: 999px;
+  transition: width 0.3s ease-out;
+  position: relative;
+}
+
+.scrollytelling-loading .loading-bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: loading-bar-shimmer 1.5s ease-in-out infinite;
+}
