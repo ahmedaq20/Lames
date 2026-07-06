@@ -5,13 +5,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ThemeInitializer from "@/components/ThemeInitializer";
 import SmoothScroll from "@/components/Experience/SmoothScroll";
-import CustomCursor from "@/components/Experience/CustomCursor";
 
 const tajawal = Tajawal({ variable: '--font-tajawal', weight: '700', subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Lames | Cinematic WebGL Experience",
-  description: "A luxury interactive experience for Lames Agency",
+  title: "Lames | Digital Product Engineering & Automation",
+  description: "Lames builds secure digital products, intelligent business automations, and scalable cloud systems for ambitious companies.",
 };
 
 export default function RootLayout({
@@ -24,7 +23,6 @@ export default function RootLayout({
       <ThemeInitializer />
       <body className="antialiased selection:bg-primary-500/30">
         <SmoothScroll>
-          <CustomCursor />
           <Navbar />
           <div className="relative z-10 w-full overflow-x-hidden">
             {children}

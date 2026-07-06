@@ -5,22 +5,22 @@ import { motion } from 'framer-motion';
 
 const projects: Project[] = [
   {
-    title: "Fintech Revolution",
-    category: "App Development",
+    title: "Connected Operations Platform",
+    category: "Product Engineering Concept",
     image: "https://images.unsplash.com/photo-1616077168712-fc6c788cd4ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    description: "Comprehensive redesign of a banking platform."
+    description: "An illustrative concept for unifying workflows, teams, and operational data in one secure system."
   },
   {
-    title: "Neon Cyberpunk",
-    category: "Art Direction",
+    title: "Automation Control Center",
+    category: "Automation Concept",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    description: "Visual identity for a gaming event."
+    description: "A concept interface for monitoring automated workflows, integrations, exceptions, and business activity."
   },
   {
-    title: "Eco Architecture",
-    category: "Web Design",
+    title: "Scalable Customer Portal",
+    category: "Digital Product Concept",
     image: "https://images.unsplash.com/photo-1481026469463-66327c86e544?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    description: "Website design for sustainable living."
+    description: "An illustrative customer experience designed around clarity, performance, and cloud-ready growth."
   }
 ];
 
@@ -34,14 +34,14 @@ function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h3 className="text-primary-600 dark:text-primary-400 font-bold mb-4 uppercase tracking-[0.3em] text-xs">Portfolio</h3>
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-4">Selected Works</h2>
+          <h3 className="text-primary-600 dark:text-primary-400 font-bold mb-4 uppercase tracking-[0.3em] text-xs">Concept Portfolio</h3>
+          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-4">Systems, Not Just Screens</h2>
           <p className="text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-            Discover our latest case studies and see how we help brands grow through design.
+            Explore concept directions that demonstrate how product design, engineering, automation, and infrastructure come together.
           </p>
         </motion.div>
         <Link href='/portfolio' className="px-8 py-4 rounded-full border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all font-bold">
-          View All Projects
+          Explore Concepts
         </Link>
       </div>
 

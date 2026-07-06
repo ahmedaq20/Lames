@@ -10,34 +10,34 @@ interface PortfolioItem {
 
 const portfolioItems: PortfolioItem[] = [
   {
-    title: "Medical website",
-    category: "Healthcare",
+    title: "Digital Care Portal",
+    category: "Product Concept",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "A concept for a clear, accessible digital service experience with structured content and secure user journeys."
   },
   {
-    title: "Crypto website",
-    category: "FinTech",
+    title: "Real-Time Finance Dashboard",
+    category: "Dashboard Concept",
     image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "A data-rich interface concept for making complex financial activity easier to monitor and understand."
   },
   {
-    title: "Bitcoin investment website",
-    category: "Finance",
+    title: "Investment Operations Hub",
+    category: "Systems Concept",
     image: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "A connected operations concept combining customer workflows, reporting, permissions, and service integrations."
   },
   {
-    title: "Bodybuilding website",
-    category: "Fitness",
+    title: "Membership Experience",
+    category: "Mobile Product Concept",
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "A responsive member journey concept designed to work consistently across web and mobile touchpoints."
   },
   {
-    title: "Dental website / Dental clinic",
-    category: "Healthcare",
+    title: "Service Booking Platform",
+    category: "Automation Concept",
     image: "https://images.unsplash.com/photo-1588776814546-1b4475432509?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "A service platform concept that connects scheduling, customer communication, and internal follow-up workflows."
   }
 ];
 
@@ -46,10 +46,10 @@ function PortfolioGrid() {
     <section className="w-full bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h3 className="text-slate-900 dark:text-white font-semibold mb-2 text-lg">Portfolio</h3>
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">Our latest projects</h2>
+          <h3 className="text-slate-900 dark:text-white font-semibold mb-2 text-lg">Selected Concepts</h3>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">How We Think About Digital Systems</h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg">
-            This is a placeholder text used as a placeholder, describing content or information in general without relying on real text.
+            Each concept explores how experience design, software engineering, automation, and reliable infrastructure can solve a real operational challenge.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ function PortfolioGrid() {
                   href="/portfolio/projectdetail"
                   className="inline-flex items-center text-slate-900 dark:text-white font-semibold hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b border-transparent hover:border-primary-600 dark:hover:border-primary-400 pb-0.5"
                 >
-                  Read more <ChevronLeft size={16} className="ml-1" />
+                  Explore concept <ChevronLeft size={16} className="ml-1" />
                 </Link>
               </div>
             </div>
@@ -80,9 +80,9 @@ function PortfolioGrid() {
         </div>
 
         <div className="flex justify-center">
-          <button className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded transition-colors duration-300 shadow-lg shadow-primary-500/25">
-            View all projects
-          </button>
+          <Link href="/contact" className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded transition-colors duration-300 shadow-lg shadow-primary-500/25">
+            Discuss Your Use Case
+          </Link>
         </div>
       </div>
     </section>

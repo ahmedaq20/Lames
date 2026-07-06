@@ -13,13 +13,13 @@ function Idea() {
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-8">
             <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-              Are you ready to launch your next big idea?
+              Ready to build a system that works for you?
             </h2>
             <p className="text-white/80 text-xl">
-              Let&apos;s create something exceptional together.
+              Tell us where your business is losing time. We&apos;ll help you turn the bottleneck into a secure, scalable solution.
             </p>
             <Link href='/contact' className="bg-white text-primary-600 hover:bg-slate-100 font-bold py-4 px-10 rounded-full text-lg transition-colors inline-flex items-center gap-2 shadow-lg">
-              Start your project <ArrowLeft size={20} />
+              Book a discovery call <ArrowLeft size={20} />
             </Link>
           </div>
         </div>

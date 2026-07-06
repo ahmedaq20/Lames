@@ -3,6 +3,7 @@
 import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 function About() {
   return (
@@ -32,11 +33,8 @@ function About() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="absolute -bottom-8 -right-8 z-20 bg-white dark:bg-slate-950 p-6 rounded-xl border border-slate-100 dark:border-white/10 shadow-xl max-w-xs hidden md:block"
           >
-            <div className="flex items-center gap-4 mb-2">
-              <div className="text-4xl font-bold text-primary-600 dark:text-primary-500">5+</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">Years of <br />Experience</div>
-            </div>
-            <p className="text-xs text-slate-500">Providing high-level digital solutions.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400">One Integrated Team</p>
+            <p className="mt-2 text-sm font-medium text-slate-700 dark:text-slate-300">Strategy, design, engineering, automation, and operations—working as one.</p>
           </motion.div>
         </motion.div>
 
@@ -51,19 +49,19 @@ function About() {
             <h3 className="text-primary-600 dark:text-primary-400 font-semibold mb-2 uppercase tracking-wider text-sm">Who We Are</h3>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
               We are more than just <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent-500 dark:from-primary-400 dark:to-accent-400">Creative Agency</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent-500 dark:from-primary-400 dark:to-accent-400">a Development Vendor</span>
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-              We believe in the power of design to transform businesses. Our team of passionate creatives and engineers works together to build brands that make an impact in the digital age.
+              Lames is an integrated digital agency specializing in product engineering and business automation. Our UI/UX, frontend, backend, mobile, DevOps, and automation specialists deliver complete systems built for security, performance, and long-term flexibility.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              "Strategic Planning",
-              "Creative Design",
-              "Advanced Development",
-              "Digital Marketing"
+              "Product Engineering",
+              "Business Automation",
+              "Cloud & DevOps",
+              "UI/UX Design"
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -86,9 +84,9 @@ function About() {
             transition={{ duration: 0.5, delay: 1 }}
             className="pt-4"
           >
-            <button className="bg-slate-900 dark:bg-white text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-200 font-bold py-3 px-8 rounded-full transition-colors shadow-lg dark:shadow-none">
-              Read Our Story
-            </button>
+            <Link href="/contact" className="inline-flex bg-slate-900 dark:bg-white text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-200 font-bold py-3 px-8 rounded-full transition-colors shadow-lg dark:shadow-none">
+              Talk to Our Team
+            </Link>
           </motion.div>
         </motion.div>
       </div>

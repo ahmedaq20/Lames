@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Facebook, Instagram, Dribbble, Twitter, Check, AlertCircle, Loader2 } from 'lucide-react';
+import { SearchCheck, Blocks, ShieldCheck, Check, AlertCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface FormData {
@@ -17,7 +17,7 @@ interface FormErrors {
 }
 
 function Contact() {
-  const [selectedService, setSelectedService] = useState('Webflow');
+  const [selectedService, setSelectedService] = useState('Digital Product Engineering');
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     email: '',
@@ -82,13 +82,13 @@ function Contact() {
   };
 
   const contactDetails = [
-    { icon: Phone, text: "+88012345678" },
-    { icon: Mail, text: "itagency@gmail.com" },
-    { icon: MapPin, text: "Gaza, Palestine" }
+    { icon: SearchCheck, text: "Free initial audit" },
+    { icon: Blocks, text: "One end-to-end technical team" },
+    { icon: ShieldCheck, text: "Security and scalability by design" }
   ];
 
   return (
-    <section className="w-full bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 transition-colors duration-300 flex justify-center">
+    <section id="contact-form" className="w-full bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 transition-colors duration-300 flex justify-center">
       {/* Card Container */}
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
@@ -108,7 +108,7 @@ function Contact() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 italic tracking-tight"
             >
-              Start Your <span className="text-primary-500">Project</span>
+              Let&apos;s Solve What&apos;s <span className="text-primary-500">Slowing You Down</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0 }}
@@ -117,7 +117,7 @@ function Contact() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-slate-500 dark:text-slate-400 mb-12 text-lg leading-relaxed"
             >
-              Fill out the form and our team will contact you within 24 hours.
+              Tell us about the product you want to build, the process you want to automate, or the system you need to strengthen. We&apos;ll review the opportunity and suggest a practical next step.
             </motion.p>
 
             <div className="space-y-8">
@@ -128,7 +128,7 @@ function Contact() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                  className="flex items-center gap-5 text-slate-700 dark:text-slate-300 group cursor-pointer"
+                  className="flex items-center gap-5 text-slate-700 dark:text-slate-300 group"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-primary-500 group-hover:text-white transition-all duration-300">
                     <detail.icon className="w-5 h-5" />
@@ -139,20 +139,6 @@ function Contact() {
             </div>
           </div>
 
-          {/* Social Icons */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex gap-8 mt-16 md:mt-0"
-          >
-            {[Facebook, Twitter, Dribbble, Instagram].map((Icon, i) => (
-              <a key={i} href="#" className="text-slate-400 hover:text-primary-500 transition-all hover:scale-110 transform">
-                <Icon size={24} />
-              </a>
-            ))}
-          </motion.div>
         </div>
 
         {/* Right Side - Form */}
@@ -210,7 +196,7 @@ function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="hello@agency.com"
+                  placeholder="you@company.com"
                   className={`w-full bg-transparent border-b-2 py-3 text-lg font-bold text-slate-900 dark:text-white focus:outline-none transition-all placeholder-slate-300 dark:placeholder-slate-700 ${errors.email
                       ? 'border-red-500'
                       : 'border-slate-100 dark:border-white/5 focus:border-primary-500'
@@ -239,7 +225,7 @@ function Contact() {
             >
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">What service do you need?</label>
               <div className="flex flex-wrap gap-6">
-                {['Creative Design', 'Digital Presence', 'Custom Systems'].map((service) => (
+                {['Digital Product Engineering', 'Business Automation', 'Cloud & DevOps', 'UI/UX Design', 'Free Audit'].map((service) => (
                   <label key={service} className="flex items-center gap-3 cursor-pointer group select-none">
                     <div className="relative flex items-center justify-center w-6 h-6">
                       <input
@@ -273,7 +259,7 @@ function Contact() {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Tell us about your dreams..."
+                placeholder="Tell us about the product, workflow, or technical challenge..."
                 rows={2}
                 className={`w-full bg-transparent border-b-2 py-3 text-lg font-bold text-slate-900 dark:text-white focus:outline-none transition-all placeholder-slate-300 dark:placeholder-slate-700 resize-none ${errors.message
                     ? 'border-red-500'
@@ -311,7 +297,7 @@ function Contact() {
                     <>
                       <Loader2 size={20} className="animate-spin" /> Sending...
                     </>
-                  ) : 'Start The Journey'}
+                  ) : 'Send Your Request'}
                 </span>
               </button>
 

@@ -1,24 +1,25 @@
-import { Facebook, Twitter, Linkedin, ChevronRight, ArrowUpRight, ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import Link from 'next/link';
 
 
 const relatedProjects = [
   {
-    title: "Medical website",
-    category: "Healthcare",
+    title: "Digital Care Portal",
+    category: "Product Concept",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "An accessible service portal concept with structured content and clear user journeys."
   },
   {
-    title: "Crypto website",
-    category: "FinTech",
+    title: "Finance Operations Dashboard",
+    category: "Dashboard Concept",
     image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "A concept for monitoring complex activity through a clear, secure operational interface."
   },
   {
-    title: "Bitcoin investment website",
-    category: "Finance",
+    title: "Connected Investment Hub",
+    category: "Systems Concept",
     image: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    description: "This is a placeholder text used as a placeholder, describing content or information in general without relying on real text."
+    description: "A connected product concept combining workflows, permissions, reporting, and integrations."
   }
 ];
 
@@ -50,8 +51,8 @@ function ProjectDetail() {
 
                   <div className="flex flex-col md:flex-row items-center gap-8">
                     <div className="flex-1 space-y-4">
-                      <h1 className="text-3xl font-bold text-slate-800">Best Cleaning Service<br />Your Home and Others</h1>
-                      <p className="text-slate-500 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      <h1 className="text-3xl font-bold text-slate-800">Book services.<br />Keep operations connected.</h1>
+                      <p className="text-slate-500 text-sm">A clear customer journey connected to automated internal follow-up.</p>
                       <div className="h-10 w-32 bg-emerald-500 rounded mt-4"></div>
                     </div>
                     <div className="flex-1">
@@ -83,38 +84,30 @@ function ProjectDetail() {
           <div className="w-full lg:w-5/12">
             <div className="lg:sticky lg:top-32">
               <h1 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-                Medical website
+                Service Booking Platform — Concept
               </h1>
               <p className="text-slate-600 dark:text-slate-400 text-lg mb-10 leading-relaxed">
-                This is a placeholder text used as a placeholder, describing content or information in general without relying on real text.
+                An illustrative product concept showing how a polished booking experience can connect with scheduling, customer communication, and internal workflows. It demonstrates our approach and is not presented as a completed client project.
               </p>
 
               <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-8 border border-slate-100 dark:border-white/5 space-y-6 mb-12">
                 <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-4">
-                  <span className="text-slate-900 dark:text-white font-semibold">Category:</span>
-                  <span className="text-slate-600 dark:text-slate-400">UI Design</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">Type:</span>
+                  <span className="text-slate-600 dark:text-slate-400">Illustrative Concept</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-4">
-                  <span className="text-slate-900 dark:text-white font-semibold">Tools:</span>
-                  <span className="text-slate-600 dark:text-slate-400">Figma</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">Scope:</span>
+                  <span className="text-slate-600 dark:text-slate-400">UI/UX, Web, Automation</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-4">
-                  <span className="text-slate-900 dark:text-white font-semibold">Project date:</span>
-                  <span className="text-slate-600 dark:text-slate-400">January, 2020</span>
-                </div>
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-slate-900 dark:text-white font-semibold">Share this:</span>
-                  <div className="flex gap-4">
-                    <a href="#" className="text-slate-400 hover:text-[#1877F2] transition-colors"><Facebook size={20} fill="currentColor" className="bg-transparent" /></a>
-                    <a href="#" className="text-slate-400 hover:text-[#1DA1F2] transition-colors"><Twitter size={20} fill="currentColor" /></a>
-                    <a href="#" className="text-slate-400 hover:text-[#0A66C2] transition-colors"><Linkedin size={20} fill="currentColor" /></a>
-                  </div>
+                  <span className="text-slate-900 dark:text-white font-semibold">Focus:</span>
+                  <span className="text-slate-600 dark:text-slate-400">Connected Operations</span>
                 </div>
               </div>
 
-              <button className="w-full bg-brand hover:bg-primary-600 text-white font-bold py-4 px-10 rounded shadow-lg shadow-primary-500/20 transition-all duration-300">
-                View Live Website
-              </button>
+              <Link href="/contact" className="block w-full bg-brand hover:bg-primary-600 text-center text-white font-bold py-4 px-10 rounded shadow-lg shadow-primary-500/20 transition-all duration-300">
+                Discuss a Similar System
+              </Link>
             </div>
           </div>
 
@@ -124,7 +117,7 @@ function ProjectDetail() {
       {/* More Projects Section */}
       <section className="bg-white dark:bg-slate-950 py-24 px-6 md:px-12 border-t border-slate-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12">More Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12">More Concepts</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {relatedProjects.map((item, index) => (
@@ -141,12 +134,12 @@ function ProjectDetail() {
                   <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-sm">
                     {item.description}
                   </p>
-                  <a
-                    href="#"
+                  <Link
+                    href="/contact"
                     className="inline-flex items-center text-slate-900 dark:text-white font-semibold hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b border-transparent hover:border-primary-600 dark:hover:border-primary-400 pb-0.5"
                   >
-                    View More <ChevronLeft size={16} className="ml-1" />
-                  </a>
+                    Discuss This Direction <ChevronLeft size={16} className="ml-1" />
+                  </Link>
                 </div>
               </div>
             ))}

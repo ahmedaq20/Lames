@@ -1,95 +1,57 @@
-import React from 'react';
-import { Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+const capabilities = [
+  'Digital Product Engineering',
+  'Business Process Automation',
+  'Cloud, DevOps & Security',
+  'UI/UX Design',
+]
 
 function Footer() {
   return (
-    <footer className="w-full bg-slate-50 dark:bg-slate-950 pt-20 border-t border-slate-200 dark:border-white/5 transition-colors duration-300">
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          <div className="space-y-6">
-            <div className="flex items-center">
-              <div className="flex items-center gap-2">
-                <Link href="/" className="relative flex items-center">
-                  {/* Light Mode Logo */}
-                  <Image
-                    src='/images/logolightanddark.png'
-                    alt='Agency Logo'
-                    width={100}
-                    height={100}
-                    className="dark:hidden block object-contain"
-                    priority
-                  />
-                  {/* Dark Mode Logo */}
-                  <Image
-                    src='/images/logo-dark-new.png'
-                    alt='Agency Logo'
-                    width={100}
-                    height={100}
-                    className="hidden dark:block object-contain"
-                    priority
-                  />
-                </Link>
-              </div>
-            </div>
-            <p className="text-slate-600 dark:text-slate-500 text-sm leading-relaxed max-w-xs">
-              We are a creative agency committed to building digital products that last.
+    <footer className="w-full border-t border-slate-200 bg-slate-50 pt-20 transition-colors duration-300 dark:border-white/5 dark:bg-slate-950">
+      <div className="mx-auto max-w-7xl px-6 pb-12 md:px-12">
+        <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-6 lg:col-span-2">
+            <Link href="/" className="relative flex w-fit items-center">
+              <Image src="/images/logolightanddark.png" alt="Lames" width={100} height={100} className="block object-contain dark:hidden" />
+              <Image src="/images/logo-dark-new.png" alt="Lames" width={100} height={100} className="hidden object-contain dark:block" />
+            </Link>
+            <p className="max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              Lames engineers digital products, automated workflows, and secure cloud systems that help businesses operate efficiently and scale with confidence.
             </p>
-            <div className="flex gap-4">
-              {[Twitter, Instagram, Linkedin, Youtube].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 hover:bg-primary-600 dark:hover:bg-primary-600 hover:text-white dark:hover:text-white hover:border-primary-600 dark:hover:border-primary-600 transition-all duration-300">
-                  <Icon size={18} />
-                </a>
+            <p className="text-lg font-bold text-slate-900 dark:text-white">We don&apos;t just build apps. We build systems that work for you.</p>
+          </div>
+
+          <div>
+            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">Capabilities</h4>
+            <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400">
+              {capabilities.map((capability) => (
+                <li key={capability}><Link href="/#services" className="transition-colors hover:text-primary-600 dark:hover:text-primary-400">{capability}</Link></li>
               ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-6">The Agency</h4>
-            <ul className="space-y-4 text-slate-600 dark:text-slate-500 text-sm">
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Jobs</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Contact Us</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-6">Services</h4>
-            <ul className="space-y-4 text-slate-600 dark:text-slate-500 text-sm">
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Web Design</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Development</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Brand Identity</a></li>
-              <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">SEO & Marketing</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-6">Stay updated on everything new</h4>
-            <div className="space-y-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm placeholder-slate-400 dark:placeholder-slate-600 transition-all shadow-sm dark:shadow-none"
-              />
-              <button className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 rounded-lg transition-colors text-sm shadow-md dark:shadow-none">
-                Subscribe
-              </button>
-            </div>
+            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">Start a Conversation</h4>
+            <p className="mb-6 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Have a product idea, an operational bottleneck, or disconnected systems? Let&apos;s find the right technical path forward.</p>
+            <Link href="/contact" className="inline-flex rounded-full bg-primary-600 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-700">Contact Lames</Link>
           </div>
         </div>
 
-        <div className="border-t border-slate-200 dark:border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-600 dark:text-slate-600 text-sm">© 2024 Agency Station. All rights reserved.</p>
-          <div className="flex gap-6 text-sm text-slate-600 dark:text-slate-600">
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a>
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row dark:border-white/5">
+          <p className="text-sm text-slate-500">© {new Date().getFullYear()} Lames. All rights reserved.</p>
+          <div className="flex gap-6 text-sm text-slate-500">
+            <Link href="/#about" className="transition-colors hover:text-slate-900 dark:hover:text-white">About</Link>
+            <Link href="/portfolio" className="transition-colors hover:text-slate-900 dark:hover:text-white">Concepts</Link>
+            <Link href="/contact" className="transition-colors hover:text-slate-900 dark:hover:text-white">Contact</Link>
           </div>
         </div>
       </div>
     </footer>
-  );
-};
-export default Footer;
+  )
+}
+
+export default Footer

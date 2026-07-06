@@ -5,20 +5,24 @@ import React, { useState } from 'react';
 
 const faqs: FaqItem[] = [
   {
-    question: "How do you handle the design process?",
-    answer: "We follow a comprehensive 4-step process: Discovery, Strategic Planning, Design, and Development. We ensure your involvement in every stage to guarantee the final product aligns perfectly with your vision."
+    question: "What can Lames build for my business?",
+    answer: "We build custom web platforms, iOS and Android applications, headless CMS experiences, internal systems, dashboards, and the backend services that power them."
   },
   {
-    question: "How long does a project typically take?",
-    answer: "The duration varies depending on the project scope. A simple branding project may take 2 to 4 weeks, while a full website redesign might require 8 to 12 weeks."
+    question: "Can you automate our existing processes and tools?",
+    answer: "Yes. We use n8n and custom API integrations to connect the systems you already use and automate workflows across sales, marketing, customer service, and internal operations."
   },
   {
-    question: "Do you offer post-launch support?",
-    answer: "Of course. We offer different maintenance packages to ensure your digital product remains secure, updated, and performs optimally after launch."
+    question: "Do you handle cloud infrastructure and deployment?",
+    answer: "Yes. We design and manage secure cloud infrastructure, servers, and CI/CD pipelines so your product can be deployed reliably, updated without unnecessary downtime, and scaled as demand grows."
   },
   {
-    question: "What industries do you specialize in?",
-    answer: "We have worked in FinTech, healthcare, e-commerce, and Software as a Service (SaaS). Our flexibility allows us to tackle challenges in most industries."
+    question: "How do design and engineering work together?",
+    answer: "Our UI/UX designers map the complete user journey and work directly with frontend, backend, and mobile engineers. This keeps the experience polished, technically practical, and consistent through delivery."
+  },
+  {
+    question: "Can you review our product before we commit to a project?",
+    answer: "Yes. You can request a free initial UI/UX or automation audit. We will identify practical opportunities to improve the experience, reduce manual work, or connect disconnected systems."
   }
 ];
 
@@ -39,7 +43,7 @@ function FAQ() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h3 className="text-primary-600 dark:text-primary-400 font-bold mb-4 uppercase tracking-[0.3em] text-xs">Help Center</h3>
+          <h3 className="text-primary-600 dark:text-primary-400 font-bold mb-4 uppercase tracking-[0.3em] text-xs">Working With Lames</h3>
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4 italic tracking-tight">Frequently Asked Questions</h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg">Everything you need to know about working with us.</p>
         </motion.div>
