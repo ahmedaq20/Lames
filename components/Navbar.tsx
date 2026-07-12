@@ -1,109 +1,143 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, Moon, Sun, X, Zap } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { useThemeStore } from '@/store/useThemeStore';
+
+const menuItems = [
+  { key: 'home', label: 'Home', href: '/#home' },
+  { key: 'services', label: 'Services', href: '/#services' },
+  { key: 'process', label: 'Process', href: '/#process' },
+  { key: 'about', label: 'About', href: '/#about' },
+  { key: 'faq', label: 'FAQ', href: '/#faq' },
+];
+
+const spySections = ['home', 'services', 'process', 'about', 'faq'];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const { theme, toggleTheme } = useThemeStore();
+  const pathname = usePathname();
 
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
 
-  // Scroll listener
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Smooth scroll handler
-  const smoothScroll = (id: string) => {
-    const el = document.getElementById(id);
+  // Scroll-spy: highlight the section currently on screen (home page only)
+  useEffect(() => {
+    if (pathname !== '/') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    spySections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const activeKey = pathname === '/' ? activeSection : '';
+
+  // Smooth-scroll for same-page hash links
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (pathname !== '/' || !href.startsWith('/#')) return;
+    const el = document.getElementById(href.slice(2));
     if (el) {
+      e.preventDefault();
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setIsOpen(false);
     }
   };
-
-  // const menuItems = ['الصفحة الرئيسية', 'الخدمات', 'من نحن', 'أعمالنا'];
-  // const menuItemsen = ['home', 'services', 'about', 'portfolio'];
-  const menuDict = {
-    home: 'Home',
-    services: 'Services',
-    about: 'About',
-    portfolio: 'Portfolio',
-  };
-
-  const getHref = (item: string) => {
-    if (item === "home") return "/";
-    if (item === "services") return "#services";
-    if (item === "about") return "#about";
-    return `/${item}`;
-  };
-
 
   return (
     <nav
       className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out rounded-full ${scrolled
-        ? 'top-4 mx-4 md:mx-auto max-w-6xl bg-white/40 dark:bg-slate-900/40 backdrop-blur-2xl border border-white/40 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] rounded-full py-3 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]'
-        : 'top-0 w-full bg-white/60 dark:bg-slate-950/60 backdrop-blur-xl py-5 border-b border-white/20 dark:border-white/5 rounded-full mt-4'
+        ? 'top-4 mx-4 md:mx-auto max-w-6xl bg-white/50 dark:bg-[#05070d]/60 backdrop-blur-2xl border border-white/40 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] py-3 dark:shadow-[0_8px_40px_-8px_rgba(37,99,235,0.25)]'
+        : 'top-0 w-full bg-white/60 dark:bg-[#05070d]/50 backdrop-blur-xl py-5 border border-white/20 dark:border-white/5 mt-4 mx-4 md:mx-auto max-w-7xl'
         }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      {/* Scroll progress bar along the pill's bottom edge */}
+      <motion.div
+        style={{ scaleX: progress }}
+        className="absolute bottom-0 left-8 right-8 h-[2px] origin-left rounded-full bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500"
+      />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center">
-          <Link href="/" className="relative flex items-center">
-            {/* Light Mode Logo */}
-            <Image
-              src='/images/logolightanddark.png'
-              alt='Agency Logo'
-              width={100}
-              height={100}
-              className="dark:hidden block object-contain"
-              priority
-            />
-            {/* Dark Mode Logo */}
-            <Image
-              src='/images/logo-dark-new.png'
-              alt='Agency Logo'
-              width={100}
-              height={100}
-              className="hidden dark:block object-contain"
-              priority
-            />
-          </Link>
-        </div>
+        <Link href="/" className="relative flex items-center">
+          <Image
+            src='/images/logolightanddark.png'
+            alt='Lames Logo'
+            width={100}
+            height={28}
+            className="dark:hidden block object-contain"
+            priority
+          />
+          <Image
+            src='/images/logo-dark-new.png'
+            alt='Lames Logo'
+            width={100}
+            height={28}
+            className="hidden dark:block object-contain"
+            priority
+          />
+        </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-1 bg-white/40 dark:bg-slate-800/40 p-1.5 rounded-full border border-white/50 dark:border-white/10 backdrop-blur-md shadow-inner">
-          {Object.entries(menuDict).map(([key, value]) => (
-
-            <Link
-              key={key}
-              // href={item === "home" ? "/" : `/${item}`||`#${item}`}
-              href={getHref(key)}
-              className="text-slate-700 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/10 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300"
-            >
-              {value.charAt(0).toUpperCase() + value.slice(1)}
-            </Link>
-          ))}
+        <div className="hidden md:flex items-center gap-1 bg-white/40 dark:bg-white/[0.04] p-1.5 rounded-full border border-white/50 dark:border-white/10 backdrop-blur-md shadow-inner">
+          {menuItems.map((item) => {
+            const isActive = activeKey === item.key;
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${isActive
+                  ? 'text-slate-900 dark:text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                    className="absolute inset-0 rounded-full bg-white/80 dark:bg-white/10 shadow-sm ring-1 ring-primary-500/20"
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-4">
-          <Link href='/contact' className="bg-primary-600/90 backdrop-blur-md text-white hover:bg-primary-600 font-semibold py-2.5 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] border border-primary-500/50">
-            contact us
+        <div className="hidden md:flex items-center gap-3">
+          <Link href='/contact' className="bg-primary-600 backdrop-blur-md text-white text-sm font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:bg-primary-500 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] border border-primary-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950">
+            Book a Discovery Call
           </Link>
           <button
             onClick={toggleTheme}
-            className="p-2.5 rounded-full text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300"
+            className="p-2.5 rounded-full text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300 hover:rotate-12"
             aria-label="Toggle Theme"
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-
         </div>
 
         {/* Mobile Menu Button */}
@@ -111,38 +145,73 @@ export default function Navbar() {
           <button
             onClick={toggleTheme}
             className="p-2 rounded-xl text-slate-700 dark:text-slate-300 bg-white/40 dark:bg-white/10 border border-white/50 dark:border-white/10 backdrop-blur-md shadow-sm"
+            aria-label="Toggle Theme"
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <button
             className="text-slate-800 dark:text-white bg-white/40 dark:bg-white/10 p-2 rounded-xl border border-white/50 dark:border-white/10 backdrop-blur-md shadow-sm transition-all"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
+            aria-expanded={isOpen}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Mobile Dropdown */}
-        {isOpen && (
-          <div className="absolute top-[calc(100%+16px)] left-4 right-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-white/50 dark:border-white/10 rounded-3xl p-6 flex flex-col gap-4 md:hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]">
-            {Object.entries(menuDict).map(([key, value]) => (
-              <button
-                key={key}
-                className="text-lg font-medium text-slate-700 dark:text-slate-200 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-white/50 dark:hover:bg-white/10 py-3 px-4 rounded-xl transition-colors text-right"
-                onClick={() => {
-                  smoothScroll(key);
-                  setIsOpen(false);
-                }}
-              >
-                {value.charAt(0).toUpperCase() + value.slice(1)}
-              </button>
-            ))}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.98 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="absolute top-[calc(100%+16px)] left-4 right-4 bg-slate-50 dark:bg-slate-950 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-4 flex flex-col gap-1 md:hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_48px_-10px_rgba(37,99,235,0.3)]"
+            >
+              {menuItems.map((item, index) => {
+                const isActive = activeKey === item.key;
+                return (
+                  <motion.div
+                    key={item.key}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.25, delay: 0.05 + index * 0.05 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={(e) => {
+                        handleNavClick(e, item.href);
+                        setIsOpen(false);
+                      }}
+                      className={`flex items-center justify-between text-lg font-medium py-3 px-4 rounded-2xl transition-colors ${isActive
+                        ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-white/50 dark:hover:bg-white/10'
+                        }`}
+                    >
+                      {item.label}
+                      {isActive && <span className="h-2 w-2 rounded-full bg-primary-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]" />}
+                    </Link>
+                  </motion.div>
+                );
+              })}
 
-            <Link href='/contact' className="bg-gradient-to-r from-primary-600/90 to-accent-500/90 backdrop-blur-md border border-primary-400/30 text-white font-bold py-3.5 rounded-2xl mt-2 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] hover:shadow-[0_0_25px_rgba(var(--color-primary-rgb),0.4)] transition-shadow text-center">
-              contact us
-            </Link>
-          </div>
-        )}
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: 0.05 + menuItems.length * 0.05 }}
+              >
+                <Link
+                  href='/contact'
+                  onClick={() => setIsOpen(false)}
+                  className="block bg-primary-600 backdrop-blur-md border border-primary-500/40 text-white font-bold py-3.5 rounded-2xl mt-2 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] hover:bg-primary-500 transition-colors text-center"
+                >
+                  Book a Discovery Call
+                </Link>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

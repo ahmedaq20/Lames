@@ -34,7 +34,7 @@ function FAQ() {
   };
 
   return (
-    <section className="w-full bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 border-t border-slate-200 dark:border-white/5 transition-colors duration-300 overflow-hidden">
+    <section id="faq" className="w-full bg-slate-50 dark:bg-slate-950 py-24 px-6 md:px-12 border-t border-slate-200 dark:border-white/5 transition-colors duration-300 overflow-hidden">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -44,7 +44,7 @@ function FAQ() {
           className="text-center mb-16"
         >
           <h3 className="text-primary-600 dark:text-primary-400 font-bold mb-4 uppercase tracking-[0.3em] text-xs">Working With Lames</h3>
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4 italic tracking-tight">Frequently Asked Questions</h2>
+          <h2 className="font-display text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">Frequently Asked Questions</h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg">Everything you need to know about working with us.</p>
         </motion.div>
 
@@ -61,21 +61,26 @@ function FAQ() {
                 : 'bg-transparent border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
                 }`}
             >
-              <button
-                onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between p-6 text-left focus:outline-none group"
-              >
-                <span className={`text-lg font-bold transition-colors duration-300 ${openIndex === index ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
-                  {faq.question}
-                </span>
-                <span className={`p-2 rounded-full transition-all duration-300 ${openIndex === index ? 'bg-primary-600 text-white rotate-180' : 'bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 group-hover:scale-110'}`}>
-                  {openIndex === index ? <Minus size={16} /> : <Plus size={16} />}
-                </span>
-              </button>
+              <h3>
+                <button
+                  onClick={() => toggle(index)}
+                  aria-expanded={openIndex === index}
+                  aria-controls={`faq-panel-${index}`}
+                  className="w-full flex items-center justify-between p-6 text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-inset rounded-2xl"
+                >
+                  <span className={`text-lg font-bold transition-colors duration-300 ${openIndex === index ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white'}`}>
+                    {faq.question}
+                  </span>
+                  <span aria-hidden="true" className={`p-2 rounded-full transition-all duration-300 ${openIndex === index ? 'bg-primary-600 text-white rotate-180' : 'bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 group-hover:scale-110'}`}>
+                    {openIndex === index ? <Minus size={16} /> : <Plus size={16} />}
+                  </span>
+                </button>
+              </h3>
 
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
+                    id={`faq-panel-${index}`}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}

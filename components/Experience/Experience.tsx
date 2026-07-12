@@ -24,12 +24,12 @@ export default function Experience() {
           <Scene />
         </Suspense>
       </Canvas>
-      <Loader 
-        containerClassName="bg-black flex items-center justify-center z-[9999]"
-        innerClassName="w-48 h-1 bg-white/20 relative"
-        barClassName="h-full bg-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+      <Loader
+        containerStyles={{ background: '#000', zIndex: 9999 }}
+        innerStyles={{ width: '12rem', height: '4px', background: 'rgba(255,255,255,0.2)' }}
+        barStyles={{ height: '100%', background: '#fff', boxShadow: '0 0 15px rgba(255,255,255,0.5)' }}
+        dataStyles={{ color: '#fff', marginTop: '1rem', fontSize: '0.875rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}
         dataInterpolation={(p) => `Experience Loading ${p.toFixed(0)}%`}
-        dataClassName="text-white mt-4 font-sans text-sm tracking-[0.2em] uppercase"
       />
     </div>
   )

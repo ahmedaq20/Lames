@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter, Space_Grotesk } from 'next/font/google'
+import localFont from 'next/font/local'
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ThemeInitializer from "@/components/ThemeInitializer";
 import SmoothScroll from "@/components/Experience/SmoothScroll";
 
-const inter = Inter({ variable: '--font-inter', subsets: ['latin'] })
-const spaceGrotesk = Space_Grotesk({ variable: '--font-space-grotesk', subsets: ['latin'] })
+const inter = localFont({
+  src: './fonts/inter-latin-var.woff2',
+  variable: '--font-inter',
+  weight: '100 900',
+  display: 'swap',
+})
+const spaceGrotesk = localFont({
+  src: './fonts/space-grotesk-latin-var.woff2',
+  variable: '--font-space-grotesk',
+  weight: '300 700',
+  display: 'swap',
+})
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lames-global.com'
 

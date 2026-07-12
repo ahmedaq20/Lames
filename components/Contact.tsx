@@ -16,6 +16,21 @@ interface FormErrors {
   message?: string;
 }
 
+const WHATSAPP_NUMBER = '970598913350';
+// Laravel API endpoint (see .env.local); WhatsApp is only offered if the request fails
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+
+function buildWhatsAppUrl(data: FormData, service: string) {
+  const text = [
+    `Hi Lames, I'm ${data.fullName}.`,
+    `Service: ${service}`,
+    `Email: ${data.email}`,
+    '',
+    data.message,
+  ].join('\n');
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
 function Contact() {
   const [selectedService, setSelectedService] = useState('Digital Product Engineering');
   const [formData, setFormData] = useState<FormData>({
@@ -26,6 +41,7 @@ function Contact() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -55,20 +71,40 @@ function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    if (validateForm()) {
-      setIsSubmitting(true);
+    setSubmitError(false);
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+    if (!CONTACT_ENDPOINT) {
+      // Endpoint not configured: surface the WhatsApp link so the lead isn't lost
+      setSubmitError(true);
+      return;
+    }
 
-      setIsSubmitting(false);
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          service: selectedService,
+          message: formData.message,
+          source: 'lames-website-contact',
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+
       setIsSuccess(true);
       setFormData({ fullName: '', email: '', message: '' });
       setErrors({});
-
-      // Reset success message after 3 seconds
-      setTimeout(() => setIsSuccess(false), 3000);
+      setTimeout(() => setIsSuccess(false), 4000);
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -303,7 +339,7 @@ function Contact() {
 
               <AnimatePresence>
                 {isSuccess && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0 }}
@@ -313,6 +349,27 @@ function Contact() {
                       <Check size={16} />
                     </div>
                     Message sent!
+                  </motion.div>
+                )}
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-sm font-bold text-red-500"
+                  >
+                    <AlertCircle size={16} className="shrink-0" />
+                    <span>
+                      Something went wrong.{' '}
+                      <a
+                        href={buildWhatsAppUrl(formData, selectedService)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline underline-offset-2 hover:text-red-400"
+                      >
+                        Message us on WhatsApp instead
+                      </a>
+                    </span>
                   </motion.div>
                 )}
               </AnimatePresence>

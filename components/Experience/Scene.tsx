@@ -93,7 +93,7 @@ export default function Scene() {
         castShadow 
         shadow-mapSize={[2048, 2048]}
       />
-      <pointLight position={[-10, -10, -10]} intensity={1.5} color="#3b82f6" opacity={0.5} />
+      <pointLight position={[-10, -10, -10]} intensity={1.5} color="#3b82f6" />
       <pointLight position={[10, -10, 10]} intensity={2} color="#d4af37" />
       <spotLight 
         position={[0, 15, 0]} 
@@ -116,7 +116,7 @@ export default function Scene() {
       <Environment preset="city" />
 
       {/* Post Processing */}
-      <EffectComposer disableNormalPass>
+      <EffectComposer enableNormalPass={false}>
         <LiquidEffect scrollSpeed={scrollSpeedRef.current} />
         <Bloom 
           luminanceThreshold={1.1} 

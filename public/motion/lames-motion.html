@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lames Motion Reel</title>
+  <style>
+    @font-face {
+      font-family: "Inter";
+      src: url("../../app/fonts/inter-latin-var.woff2") format("woff2");
+      font-weight: 100 900;
+    }
+    @font-face {
+      font-family: "Space Grotesk";
+      src: url("../../app/fonts/space-grotesk-latin-var.woff2") format("woff2");
+      font-weight: 300 700;
+    }
+    :root {
+      --blue: #3b82f6;
+      --blue-light: #93c5fd;
+      --violet: #a855f7;
+      --green: #34d399;
+      --ink: #030509;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body { background: var(--ink); color: white; font-family: "Inter", Arial, sans-serif; }
+    .stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(ellipse 82% 60% at 50% -15%, rgba(37, 99, 235, .30), transparent 66%),
+        radial-gradient(ellipse 58% 48% at 95% 95%, rgba(168, 85, 247, .14), transparent 70%),
+        #030509;
+    }
+    .grid {
+      position: absolute;
+      inset: -10%;
+      z-index: -2;
+      opacity: .32;
+      background-image:
+        linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
+      background-size: 72px 72px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black, transparent);
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black, transparent);
+    }
+    .beam {
+      position: absolute;
+      left: 15%; right: 15%; top: 37%; height: 1px;
+      z-index: -1;
+      background: linear-gradient(90deg, transparent, rgba(96,165,250,.65), transparent);
+    }
+    .noise {
+      position: absolute; inset: 0; z-index: 20; pointer-events: none; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+    }
+    .brand-bug { position: absolute; left: 5.2%; top: 5.2%; width: 132px; z-index: 10; }
+    .brand-bug img { display: block; width: 100%; height: auto; }
+    .counter { position: absolute; right: 5.2%; top: 5.5%; color: #64748b; font-size: 14px; font-weight: 700; letter-spacing: 0; z-index: 10; }
+    .scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 8%; }
+    h1, h2, h3 { margin: 0; font-family: "Space Grotesk", "Inter", sans-serif; letter-spacing: 0; }
+    .eyebrow { color: var(--blue-light); font-size: 16px; font-weight: 700; text-transform: uppercase; }
+    .accent { color: var(--blue-light); }
+    .muted { color: var(--muted); }
+
+    .intro { text-align: center; }
+    .intro-logo { width: 250px; margin: 0 auto 54px; }
+    .intro-logo img { display: block; width: 100%; }
+    .intro h1 { max-width: 1100px; font-size: 76px; line-height: 1.04; }
+    .intro p { margin: 28px auto 0; max-width: 820px; color: #cbd5e1; font-size: 22px; line-height: 1.55; }
+
+    .services { align-items: center; gap: 8%; }
+    .services-copy { width: 38%; }
+    .services-copy h2 { margin-top: 18px; font-size: 58px; line-height: 1.08; }
+    .services-copy p { margin: 22px 0 0; max-width: 520px; color: #94a3b8; font-size: 19px; line-height: 1.6; }
+    .service-grid { width: 52%; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .service-card { min-height: 172px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.045); padding: 26px; }
+    .service-number { color: var(--blue-light); font: 700 13px "Space Grotesk", sans-serif; }
+    .service-card h3 { margin-top: 28px; font-size: 24px; line-height: 1.15; }
+    .service-card p { margin: 9px 0 0; color: #94a3b8; font-size: 14px; line-height: 1.45; }
+
+    .workflow { flex-direction: column; }
+    .workflow-head { width: 100%; max-width: 1280px; display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 22px; }
+    .workflow-head h2 { margin-top: 10px; font-size: 42px; }
+    .workflow-state { display: flex; align-items: center; gap: 10px; color: #d1fae5; font-size: 14px; font-weight: 700; }
+    .state-dot { width: 9px; height: 9px; background: var(--green); box-shadow: 0 0 16px rgba(52,211,153,.8); border-radius: 50%; }
+    .workflow-panel { width: 100%; max-width: 1280px; min-height: 330px; border: 1px solid rgba(255,255,255,.12); background: rgba(9,15,29,.82); padding: 28px 38px 26px; box-shadow: 0 30px 100px rgba(0,0,0,.38); }
+    .nodes { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); align-items: start; gap: 28px; padding-top: 14px; }
+    .track { position: absolute; top: 44px; left: 9%; right: 9%; height: 2px; background: rgba(96,165,250,.18); }
+    .track-fill { height: 100%; width: 0; background: var(--blue-light); box-shadow: 0 0 15px rgba(96,165,250,.8); }
+    .node { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; opacity: .35; }
+    .node-icon { display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border: 1px solid rgba(255,255,255,.12); background: #111827; color: var(--blue-light); font: 700 16px "Space Grotesk", sans-serif; }
+    .node h3 { margin-top: 14px; font-size: 16px; }
+    .node p { margin: 7px 0 0; color: #64748b; font-size: 12px; }
+    .node-check { position: absolute; top: -7px; right: calc(50% - 37px); display: grid; place-items: center; width: 21px; height: 21px; border-radius: 50%; background: var(--green); color: #04100d; font-weight: 900; font-size: 13px; opacity: 0; }
+    .execution { margin-top: 32px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 19px; display: flex; align-items: center; justify-content: space-between; }
+    .execution-log { color: #94a3b8; font: 500 14px ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .execution-time { color: var(--green); font: 700 14px "Space Grotesk", sans-serif; opacity: 0; }
+
+    .outro { text-align: center; flex-direction: column; }
+    .outro-logo { width: 220px; margin-bottom: 46px; }
+    .outro-logo img { display: block; width: 100%; }
+    .outro h2 { font-size: 88px; line-height: 1; }
+    .outro p { margin: 28px 0 0; color: #cbd5e1; font-size: 23px; }
+    .outro-link { margin-top: 48px; display: inline-flex; align-items: center; gap: 14px; border: 1px solid rgba(147,197,253,.34); background: rgba(59,130,246,.13); padding: 16px 23px; color: white; font-size: 18px; font-weight: 700; }
+    .arrow { color: var(--blue-light); font-size: 24px; }
+    .footer-line { position: absolute; left: 5.2%; right: 5.2%; bottom: 5.2%; display: flex; justify-content: space-between; color: #64748b; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+
+    .portrait .brand-bug { left: 7%; top: 4.2%; width: 145px; }
+    .portrait .counter { right: 7%; top: 4.5%; }
+    .portrait .scene { padding: 9% 7%; }
+    .portrait .intro-logo { width: 260px; margin-bottom: 70px; }
+    .portrait .intro h1 { font-size: 84px; line-height: 1.04; }
+    .portrait .intro p { max-width: 780px; margin-top: 38px; font-size: 30px; }
+    .portrait .eyebrow { font-size: 21px; }
+    .portrait .services { flex-direction: column; align-items: stretch; justify-content: center; gap: 38px; }
+    .portrait .services-copy { width: 100%; }
+    .portrait .services-copy h2 { font-size: 56px; max-width: 800px; }
+    .portrait .services-copy p { max-width: 820px; font-size: 20px; }
+    .portrait .service-grid { width: 100%; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .portrait .service-card { min-height: 205px; padding: 28px; }
+    .portrait .service-card h3 { margin-top: 28px; font-size: 26px; }
+    .portrait .service-card p { font-size: 16px; }
+    .portrait .workflow { padding-left: 6%; padding-right: 6%; }
+    .portrait .workflow-head { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 25px; }
+    .portrait .workflow-head h2 { font-size: 50px; line-height: 1.08; }
+    .portrait .workflow-state { font-size: 17px; }
+    .portrait .workflow-panel { min-height: 650px; padding: 30px 34px 27px; }
+    .portrait .nodes { grid-template-columns: 1fr; gap: 7px; padding: 0; }
+    .portrait .track { top: 6%; bottom: 6%; left: 40px; right: auto; width: 2px; height: auto; }
+    .portrait .track-fill { width: 100%; height: 0; }
+    .portrait .node { min-height: 88px; flex-direction: row; text-align: left; gap: 25px; opacity: .35; }
+    .portrait .node-icon { flex: 0 0 auto; width: 68px; height: 68px; font-size: 18px; }
+    .portrait .node-copy { flex: 1; }
+    .portrait .node h3 { margin: 0; font-size: 22px; }
+    .portrait .node p { margin-top: 6px; font-size: 15px; }
+    .portrait .node-check { left: 55px; right: auto; top: 5px; width: 22px; height: 22px; }
+    .portrait .execution { margin-top: 17px; padding-top: 18px; }
+    .portrait .execution-log, .portrait .execution-time { font-size: 14px; }
+    .portrait .outro-logo { width: 280px; margin-bottom: 70px; }
+    .portrait .outro h2 { max-width: 880px; font-size: 84px; line-height: 1; }
+    .portrait .outro p { max-width: 780px; font-size: 31px; line-height: 1.45; }
+    .portrait .outro-link { margin-top: 62px; padding: 22px 30px; font-size: 25px; }
+    .portrait .footer-line { left: 7%; right: 7%; bottom: 4.2%; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main class="stage" id="stage">
+    <div class="grid" id="grid"></div>
+    <div class="beam"></div>
+    <div class="noise"></div>
+    <div class="brand-bug" id="brandBug"><img src="../images/logo-dark-new.png" alt="Lames"></div>
+    <div class="counter" id="counter">01 / 04</div>
+
+    <section class="scene intro" id="intro">
+      <div>
+        <div class="intro-logo" id="introLogo"><img src="../images/logo-dark-new.png" alt="Lames"></div>
+        <h1 id="introTitle">One engineering team.<br><span class="accent">Every system connected.</span></h1>
+        <p id="introSub">Digital products, intelligent automation, and cloud infrastructure built to work as one.</p>
+      </div>
+    </section>
+
+    <section class="scene services" id="services">
+      <div class="services-copy">
+        <div class="eyebrow">End-to-end capabilities</div>
+        <h2>From idea to <span class="accent">reliable operation.</span></h2>
+        <p>We design the experience, engineer the product, automate the work, and run it securely at scale.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service-card"><span class="service-number">01</span><h3>Product Engineering</h3><p>Web, mobile, custom systems</p></article>
+        <article class="service-card"><span class="service-number">02</span><h3>Automation &amp; AI</h3><p>n8n workflows, agents, APIs</p></article>
+        <article class="service-card"><span class="service-number">03</span><h3>Cloud &amp; Security</h3><p>DevOps, CI/CD, infrastructure</p></article>
+        <article class="service-card"><span class="service-number">04</span><h3>UI/UX Design</h3><p>Clear, intuitive product experiences</p></article>
+      </div>
+    </section>
+
+    <section class="scene workflow" id="workflow">
+      <header class="workflow-head">
+        <div><div class="eyebrow">Automation in motion</div><h2>One lead. <span class="accent">Zero manual handoffs.</span></h2></div>
+        <div class="workflow-state"><span class="state-dot"></span> Workflow running</div>
+      </header>
+      <div class="workflow-panel">
+        <div class="nodes">
+          <div class="track"><div class="track-fill" id="trackFill"></div></div>
+          <div class="node"><div class="node-icon">01</div><div class="node-copy"><h3>New Lead</h3><p>Website form received</p></div><span class="node-check">✓</span></div>
+          <div class="node"><div class="node-icon">AI</div><div class="node-copy"><h3>AI Qualification</h3><p>Intent and priority scored</p></div><span class="node-check">✓</span></div>
+          <div class="node"><div class="node-icon">CRM</div><div class="node-copy"><h3>CRM Update</h3><p>Contact and context created</p></div><span class="node-check">✓</span></div>
+          <div class="node"><div class="node-icon">04</div><div class="node-copy"><h3>Team Notified</h3><p>Slack alert delivered</p></div><span class="node-check">✓</span></div>
+          <div class="node"><div class="node-icon">05</div><div class="node-copy"><h3>Email Sent</h3><p>Follow-up personalized</p></div><span class="node-check">✓</span></div>
+        </div>
+        <div class="execution"><div class="execution-log" id="executionLog">Waiting for trigger...</div><div class="execution-time" id="executionTime">Run completed in 4.2s</div></div>
+      </div>
+    </section>
+
+    <section class="scene outro" id="outro">
+      <div class="outro-logo" id="outroLogo"><img src="../images/logo-dark-new.png" alt="Lames"></div>
+      <h2 id="outroTitle">Build. Automate.<br><span class="accent">Scale.</span></h2>
+      <p id="outroSub">Systems that work for you, engineered by one integrated team.</p>
+      <div class="outro-link" id="outroLink">lames-global.com <span class="arrow">→</span></div>
+    </section>
+
+    <footer class="footer-line"><span>Digital Product Engineering</span><span>Automation Agency</span></footer>
+  </main>
+  <script>
+    const duration = 12;
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => [...document.querySelectorAll(selector)];
+    const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+    const ease = (value) => 1 - Math.pow(1 - clamp(value), 3);
+    const smooth = (value) => { const x = clamp(value); return x * x * (3 - 2 * x); };
+    const between = (time, start, end) => clamp((time - start) / (end - start));
+    const sceneOpacity = (time, start, hold, end) => smooth(between(time, start, start + .45)) * (1 - smooth(between(time, hold, end)));
+    const setTransform = (el, opacity, y = 0, scale = 1) => {
+      el.style.opacity = opacity.toFixed(4);
+      el.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+    };
+    function renderFrame(rawTime) {
+      const time = clamp(Number(rawTime) || 0, 0, duration);
+      const portrait = innerHeight > innerWidth;
+      $('#stage').classList.toggle('portrait', portrait);
+      $('#grid').style.transform = `translate3d(${(-time * 2.4).toFixed(2)}px, ${(time * 1.4).toFixed(2)}px, 0)`;
+
+      const introOpacity = sceneOpacity(time, 0, 2.25, 2.75);
+      setTransform($('#intro'), introOpacity, (1 - ease(between(time, .05, .75))) * 30 - smooth(between(time, 2.2, 2.75)) * 30, 1 + (1 - ease(between(time, 0, 1))) * .025);
+      setTransform($('#introLogo'), ease(between(time, 0, .6)) * introOpacity, (1 - ease(between(time, 0, .6))) * 22);
+      setTransform($('#introTitle'), ease(between(time, .28, 1.05)) * introOpacity, (1 - ease(between(time, .28, 1.05))) * 44);
+      setTransform($('#introSub'), ease(between(time, .82, 1.48)) * introOpacity, (1 - ease(between(time, .82, 1.48))) * 25);
+
+      const serviceOpacity = sceneOpacity(time, 2.3, 5.0, 5.5);
+      setTransform($('#services'), serviceOpacity, (1 - ease(between(time, 2.3, 2.85))) * 34 - smooth(between(time, 5, 5.5)) * 28);
+      $$('.service-card').forEach((card, index) => {
+        const reveal = ease(between(time, 2.8 + index * .16, 3.42 + index * .16));
+        card.style.opacity = (serviceOpacity * reveal).toFixed(4);
+        card.style.transform = `translate3d(0, ${((1 - reveal) * 36).toFixed(2)}px, 0)`;
+        card.style.borderColor = `rgba(147,197,253,${(.12 + reveal * .13).toFixed(3)})`;
+      });
+
+      const workflowOpacity = sceneOpacity(time, 5.05, 9.2, 9.7);
+      setTransform($('#workflow'), workflowOpacity, (1 - ease(between(time, 5.05, 5.65))) * 34 - smooth(between(time, 9.15, 9.7)) * 28);
+      const progress = ease(between(time, 5.8, 8.75));
+      const track = $('#trackFill');
+      if (portrait) { track.style.height = `${progress * 100}%`; track.style.width = '100%'; }
+      else { track.style.width = `${progress * 100}%`; track.style.height = '100%'; }
+      const logMessages = ['New lead received', 'AI qualification running', 'Contact created in CRM', 'Team notified in Slack', 'Personalized email sent'];
+      const activeIndex = Math.min(4, Math.floor(progress * 5));
+      $$('.node').forEach((node, index) => {
+        const active = progress * 5 >= index;
+        const complete = progress * 5 >= index + .72;
+        node.style.opacity = active ? '1' : '.35';
+        node.style.transform = `scale(${active && !complete ? 1.045 : 1})`;
+        node.querySelector('.node-icon').style.borderColor = active ? 'rgba(147,197,253,.58)' : 'rgba(255,255,255,.12)';
+        node.querySelector('.node-icon').style.boxShadow = active && !complete ? '0 0 28px rgba(59,130,246,.28)' : 'none';
+        node.querySelector('.node-check').style.opacity = complete ? '1' : '0';
+      });
+      $('#executionLog').textContent = progress === 0 ? 'Waiting for trigger...' : `> ${logMessages[activeIndex]}`;
+      $('#executionTime').style.opacity = progress > .96 ? '1' : '0';
+
+      const outroOpacity = smooth(between(time, 9.25, 9.85));
+      setTransform($('#outro'), outroOpacity, (1 - ease(between(time, 9.25, 9.9))) * 36);
+      setTransform($('#outroLogo'), ease(between(time, 9.32, 9.9)) * outroOpacity, (1 - ease(between(time, 9.32, 9.9))) * 22);
+      setTransform($('#outroTitle'), ease(between(time, 9.55, 10.25)) * outroOpacity, (1 - ease(between(time, 9.55, 10.25))) * 48);
+      setTransform($('#outroSub'), ease(between(time, 10.0, 10.65)) * outroOpacity, (1 - ease(between(time, 10.0, 10.65))) * 26);
+      setTransform($('#outroLink'), ease(between(time, 10.35, 11.05)) * outroOpacity, (1 - ease(between(time, 10.35, 11.05))) * 24);
+
+      const persistent = smooth(between(time, 2.35, 2.8)) * (1 - smooth(between(time, 4.8, 5.2)));
+      $('#brandBug').style.opacity = (persistent * smooth(between(time, .2, .65))).toFixed(3);
+      const sceneNumber = time < 2.4 ? '01 / 04' : time < 5.2 ? '02 / 04' : time < 9.4 ? '03 / 04' : '04 / 04';
+      $('#counter').textContent = sceneNumber;
+      $('#counter').style.opacity = time > 9.4 ? '0' : '.9';
+      document.body.dataset.time = time.toFixed(4);
+      return true;
+    }
+    window.renderFrame = renderFrame;
+    window.motionReady = document.fonts.ready.then(() => new Promise((resolve) => {
+      const images = [...document.images];
+      Promise.all(images.map((img) => img.complete ? Promise.resolve() : new Promise((done) => { img.onload = img.onerror = done; }))).then(resolve);
+    }));
+    const params = new URLSearchParams(location.search);
+    renderFrame(Number(params.get('t')) || 0);
+    if (params.get('preview') === '1') {
+      const start = performance.now();
+      const loop = (now) => { renderFrame(((now - start) / 1000) % duration); requestAnimationFrame(loop); };
+      requestAnimationFrame(loop);
+    }
+  </script>
+</body>
+</html>

@@ -2,43 +2,41 @@
 
 import { Blocks, Bot, ShieldCheck, TrendingUp } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { Accent } from '@/components/ui/SectionHeading'
 
 const advantages = [
   {
-    number: '01',
     title: 'Design That Attracts',
     description: 'Interfaces crafted around the real user journey, polished enough to carry the weight of your brand and win your customers over.',
     icon: Blocks,
-    gradient: 'from-blue-500 to-violet-500',
+    gradient: 'from-primary-500 to-accent-500',
   },
   {
-    number: '02',
     title: 'Engineering That Endures',
     description: 'Strong, secure code and stable architectures that keep your business running — performance and security are requirements, not afterthoughts.',
     icon: ShieldCheck,
-    gradient: 'from-cyan-500 to-blue-500',
+    gradient: 'from-primary-400 to-primary-600',
   },
   {
-    number: '03',
     title: 'Automation That Works for You',
     description: 'Intelligent workflows quietly run your routine operations, freeing hundreds of hours so your team can focus on what actually grows the business.',
     icon: Bot,
-    gradient: 'from-orange-500 to-fuchsia-500',
+    gradient: 'from-accent-500 to-primary-500',
   },
   {
-    number: '04',
     title: 'Infrastructure Ready to Scale',
     description: 'Cloud foundations and flexible architecture built to grow with your users, your data, and the ambitions of your business.',
     icon: TrendingUp,
-    gradient: 'from-fuchsia-500 to-violet-500',
+    gradient: 'from-accent-400 to-accent-600',
   },
 ]
 
-// TODO: replace these with real, verifiable figures once available (or client logos/quotes).
+// Positioning facts, not metrics. TODO(trust): replace with real, verifiable
+// figures (projects shipped, uptime, hours automated) or client quotes once available.
 const proofStats = [
   { value: 'End-to-end', label: 'Design, build, automation & cloud under one team' },
-  { value: '100%', label: 'Custom-built systems — no templates, no lock-in' },
-  { value: '24/7', label: 'Monitored, secure infrastructure that stays up' },
+  { value: '100% custom', label: 'Purpose-built systems — no templates, no lock-in' },
+  { value: 'Security-first', label: 'Best practices applied from architecture to deployment' },
   { value: '5 disciplines', label: 'UI/UX · Frontend · Backend · Mobile · DevOps' },
 ]
 
@@ -57,7 +55,7 @@ function WhyLames() {
           <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-primary-600 dark:text-primary-400">Why Lames</h3>
           <h2 className="mb-6 font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-6xl">
             We don&apos;t hand over code. <br className="hidden md:block" />
-            We hand over a <span className="bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">complete system</span>.
+            We hand over a <Accent>complete system</Accent>.
           </h2>
           <p className="text-lg leading-relaxed text-slate-600 dark:text-slate-400">
             Traditional vendors deliver features. We connect the product, the workflows behind it, and the infrastructure that keeps it running.
@@ -73,8 +71,8 @@ function WhyLames() {
         >
           {proofStats.map((stat) => (
             <div key={stat.label} className="bg-white p-6 transition-colors dark:bg-[#05070d] md:p-8">
-              <dt className="font-display text-2xl font-bold text-slate-900 dark:text-white md:text-3xl">
-                <span className="bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">{stat.value}</span>
+              <dt className="font-display text-xl font-bold text-primary-600 dark:text-primary-400 md:text-2xl">
+                {stat.value}
               </dt>
               <dd className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{stat.label}</dd>
             </div>
@@ -92,9 +90,6 @@ function WhyLames() {
               className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary-500/30 hover:shadow-2xl hover:shadow-primary-500/10 dark:border-white/5 dark:bg-slate-900/40 md:p-10"
             >
               <div className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${item.gradient} opacity-[0.07] blur-2xl transition-opacity duration-500 group-hover:opacity-[0.16]`} />
-              <span className="text-stroke pointer-events-none absolute -bottom-4 right-6 font-display text-8xl font-bold leading-none md:text-9xl">
-                {item.number}
-              </span>
 
               <div className={`mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${item.gradient} text-white shadow-lg transition-transform duration-300 group-hover:scale-110`}>
                 <item.icon size={26} />
