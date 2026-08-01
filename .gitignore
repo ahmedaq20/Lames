@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# videos (too large for git — host externally)
+/public/video/
+*.mp4
+*.mov
+*.webm
