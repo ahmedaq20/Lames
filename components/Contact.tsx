@@ -17,8 +17,13 @@ interface FormErrors {
 }
 
 const WHATSAPP_NUMBER = '970598913350';
-// Laravel API endpoint (see .env.local); WhatsApp is only offered if the request fails
-const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+// Laravel API endpoint. Prefer the full endpoint when provided, otherwise build it
+// from NEXT_PUBLIC_BASE_API_URL and the Laravel contact route.
+const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL?.replace(/\/+$/, '');
+const CONTACT_ROUTE = process.env.NEXT_PUBLIC_CONTACT_ROUTE ?? '/contact';
+const CONTACT_ENDPOINT =
+  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ||
+  (BASE_API_URL ? `${BASE_API_URL}${CONTACT_ROUTE.startsWith('/') ? CONTACT_ROUTE : `/${CONTACT_ROUTE}`}` : undefined);
 
 function buildWhatsAppUrl(data: FormData, service: string) {
   const text = [
@@ -87,6 +92,8 @@ function Contact() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          name: formData.fullName,
+          full_name: formData.fullName,
           fullName: formData.fullName,
           email: formData.email,
           service: selectedService,
