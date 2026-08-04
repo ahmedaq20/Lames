@@ -19,7 +19,7 @@ const company = [
   { label: 'Contact', href: '/contact' },
 ]
 
-const EMAIL = 'hello@lames-global.com'
+const EMAIL = 'hello@lames.io'
 const PHONE_DISPLAY = '+970 59 891 3350'
 const PHONE_HREF = 'tel:+970598913350'
 

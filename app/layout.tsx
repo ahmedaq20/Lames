@@ -20,7 +20,7 @@ const spaceGrotesk = localFont({
   display: 'swap',
 })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lames-global.com'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lames.io'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

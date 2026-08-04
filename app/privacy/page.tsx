@@ -39,7 +39,7 @@ const sections: LegalSection[] = [
   {
     heading: '5. Your Rights',
     body: [
-      'You may request access to, correction of, or deletion of your personal information at any time by contacting us at hello@lames-global.com.',
+      'You may request access to, correction of, or deletion of your personal information at any time by contacting us at hello@lames.io.',
     ],
   },
   {

@@ -47,7 +47,7 @@ const sections: LegalSection[] = [
   {
     heading: '7. Contact',
     body: [
-      'For any questions about these terms, contact us at hello@lames-global.com.',
+      'For any questions about these terms, contact us at hello@lames.io.',
     ],
   },
 ]

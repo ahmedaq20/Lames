@@ -37,7 +37,7 @@ export default function LegalPage({ title, updated, intro, sections }: LegalPage
         <div className="mt-16 border-t border-slate-200 pt-8 dark:border-white/10">
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Questions? Reach us at{' '}
-            <a href="mailto:hello@lames-global.com" className="font-medium text-primary-600 hover:underline dark:text-primary-400">hello@lames-global.com</a>
+            <a href="mailto:hello@lames.io" className="font-medium text-primary-600 hover:underline dark:text-primary-400">hello@lames.io</a>
             {' '}or via our{' '}
             <Link href="/contact" className="font-medium text-primary-600 hover:underline dark:text-primary-400">contact page</Link>.
           </p>
