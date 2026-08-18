@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   Bot,
@@ -19,6 +20,7 @@ import {
 import ServiceVisual from '@/components/ServiceVisuals'
 import { PrimaryCta, SecondaryCta } from '@/components/ui/Button'
 import { Accent, SectionHeading } from '@/components/ui/SectionHeading'
+import { useTranslation } from '@/locales/translations'
 
 interface Capability {
   key: string
@@ -26,17 +28,26 @@ interface Capability {
   icon: LucideIcon
   title: string
   description: string
-  features: string[]
+  features: readonly string[]
   visual: React.ReactNode
+}
+
+const capabilityIcons: Record<string, LucideIcon> = {
+  engineering: Smartphone,
+  automation: Workflow,
+  infrastructure: Cloud,
+  design: Palette,
+  ai: Bot,
 }
 
 /** Compact preview of the automation demo — the full interactive board lives in #automation. */
 function AutomationMiniVisual() {
+  const { t } = useTranslation()
   const reduceMotion = useReducedMotion()
   const chain = [
-    { icon: Zap, label: 'New Lead' },
-    { icon: Bot, label: 'AI Qualification' },
-    { icon: Users, label: 'CRM Update' },
+    { icon: Zap, label: t.automation.nodes.lead },
+    { icon: Bot, label: t.automation.nodes.ai },
+    { icon: Users, label: t.automation.nodes.crm },
   ]
 
   return (
@@ -46,7 +57,7 @@ function AutomationMiniVisual() {
       <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-accent-500/15 blur-3xl" />
 
       <p className="relative mb-8 text-[10px] font-bold uppercase tracking-[0.22em] text-primary-300">
-        Workflow preview
+        {t.services.workflowPreview}
       </p>
 
       <div className="relative flex items-center justify-between gap-2">
@@ -78,7 +89,7 @@ function AutomationMiniVisual() {
         className="relative mt-10 inline-flex items-center gap-2 self-center rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-primary-400/50 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
       >
         <Sparkles size={15} className="text-primary-300" />
-        Watch the full workflow run live below
+        {t.services.watchFullWorkflow}
       </a>
     </div>
   )
@@ -86,12 +97,8 @@ function AutomationMiniVisual() {
 
 /** Minimal agent console mock for the AI capability tab. */
 function AiAgentVisual() {
-  const exchanges = [
-    { from: 'system', text: 'New support ticket #4821 received' },
-    { from: 'agent', text: 'Classified as billing · priority high. Suggested reply drafted.' },
-    { from: 'system', text: 'Routed to finance team with full context' },
-    { from: 'agent', text: 'Follow-up scheduled. Human approval requested for refund.' },
-  ]
+  const { t } = useTranslation()
+  const exchanges = t.services.aiAgent.messages
 
   return (
     <div className="relative flex h-[440px] w-full max-w-[560px] flex-col overflow-hidden rounded-[2rem] border border-accent-400/20 bg-slate-950 p-6 shadow-2xl shadow-primary-950/20 sm:p-8">
@@ -103,9 +110,9 @@ function AiAgentVisual() {
           <Bot size={19} />
         </span>
         <div>
-          <p className="text-sm font-bold text-white">Operations Agent</p>
+          <p className="text-sm font-bold text-white">{t.services.aiAgent.title}</p>
           <p className="flex items-center gap-1.5 text-[11px] text-slate-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Working with human oversight
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {t.services.aiAgent.status}
           </p>
         </div>
       </div>
@@ -135,100 +142,63 @@ function AiAgentVisual() {
       </div>
 
       <p className="relative mt-4 flex items-center gap-2 text-[11px] text-slate-500">
-        <ShieldCheck size={13} className="text-primary-400" />
-        Every agent ships with guardrails and human-in-the-loop controls.
+        <ShieldCheck size={13} className="text-primary-400 shrink-0" />
+        {t.services.aiAgent.disclaimer}
       </p>
     </div>
   )
 }
 
-const capabilities: Capability[] = [
-  {
-    key: 'engineering',
-    label: 'Engineering',
-    icon: Smartphone,
-    title: 'Digital Product Engineering',
-    description:
-      'We design and build high-performance web platforms, mobile applications, custom systems, and flexible headless CMS experiences.',
-    features: [
-      'Custom web applications',
-      'iOS & Android development',
-      'Headless CMS architecture',
-      'Scalable backend systems',
-      'Performance-focused delivery',
-    ],
-    visual: <ServiceVisual index={0} />,
-  },
-  {
-    key: 'automation',
-    label: 'Automation',
-    icon: Workflow,
-    title: 'Business Process Automation',
-    description:
-      'We turn repetitive work into reliable automated workflows with n8n and custom API integrations, so information moves between your tools without manual effort.',
-    features: [
-      'n8n workflow design & operation',
-      'API integrations between your tools',
-      'Automated reporting & alerts',
-      'Fewer manual tasks, fewer errors',
-      'Monitored, recoverable workflows',
-    ],
-    visual: <AutomationMiniVisual />,
-  },
-  {
-    key: 'infrastructure',
-    label: 'Infrastructure',
-    icon: Cloud,
-    title: 'Cloud, DevOps & Security',
-    description:
-      'We create secure, resilient infrastructure that keeps your systems available, deployable, and ready to scale under pressure.',
-    features: [
-      'Cloud infrastructure design',
-      'Server management',
-      'CI/CD pipelines',
-      'Security best practices',
-      'Scalable and stable environments',
-    ],
-    visual: <ServiceVisual index={1} />,
-  },
-  {
-    key: 'design',
-    label: 'Design',
-    icon: Palette,
-    title: 'UI/UX Design',
-    description:
-      'We study the complete user journey and design polished interfaces that make complex products clear, intuitive, and true to your brand.',
-    features: [
-      'User journey mapping',
-      'Interface and interaction design',
-      'Responsive product experiences',
-      'Design systems',
-      'Developer-ready handoff',
-    ],
-    visual: <ServiceVisual index={2} />,
-  },
-  {
-    key: 'ai',
-    label: 'AI',
-    icon: Bot,
-    title: 'AI Agents & Intelligent Systems',
-    description:
-      'We put AI to work inside your operations: agents that handle routine decisions, assistants that support your customers, and AI steps wired directly into your workflows — always with guardrails.',
-    features: [
-      'AI agents for routine operations',
-      'Customer & support assistants',
-      'Document and data extraction',
-      'AI steps inside n8n workflows',
-      'Human-in-the-loop controls',
-    ],
-    visual: <AiAgentVisual />,
-  },
-]
+const ROTATION_INTERVAL_MS = 5000
 
 function Services() {
-  const [activeKey, setActiveKey] = useState(capabilities[0].key)
+  const { t, isRtl } = useTranslation()
+  const reduceMotion = useReducedMotion()
+  const [activeKey, setActiveKey] = useState('engineering')
+  const [isPaused, setIsPaused] = useState(false)
+  const [timerKey, setTimerKey] = useState(0)
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  const visualsMap: Record<string, React.ReactNode> = {
+    engineering: <ServiceVisual index={0} />,
+    automation: <AutomationMiniVisual />,
+    infrastructure: <ServiceVisual index={1} />,
+    design: <ServiceVisual index={2} />,
+    ai: <AiAgentVisual />,
+  }
+
+  const capabilities: Capability[] = t.services.capabilities.map((c) => ({
+    key: c.key,
+    label: c.label,
+    icon: capabilityIcons[c.key] || Smartphone,
+    title: c.title,
+    description: c.description,
+    features: c.features,
+    visual: visualsMap[c.key],
+  }))
+
   const active = capabilities.find((capability) => capability.key === activeKey) ?? capabilities[0]
+
+  const handleTabSelect = useCallback((key: string) => {
+    setActiveKey(key)
+    setTimerKey((k) => k + 1)
+  }, [])
+
+  // Auto-advance tabs every 5 seconds (paused on hover / focus, disabled if reduced motion preferred)
+  useEffect(() => {
+    if (isPaused || reduceMotion) return
+
+    const timer = setInterval(() => {
+      setActiveKey((prevKey) => {
+        const currentIndex = capabilities.findIndex((c) => c.key === prevKey)
+        const nextIndex = currentIndex === -1 || currentIndex === capabilities.length - 1 ? 0 : currentIndex + 1
+        return capabilities[nextIndex].key
+      })
+      setTimerKey((k) => k + 1)
+    }, ROTATION_INTERVAL_MS)
+
+    return () => clearInterval(timer)
+  }, [isPaused, reduceMotion, capabilities, timerKey])
 
   const onTabKeyDown = (event: React.KeyboardEvent, index: number) => {
     const last = capabilities.length - 1
@@ -239,24 +209,53 @@ function Services() {
     else if (event.key === 'End') next = last
     if (next === null) return
     event.preventDefault()
-    setActiveKey(capabilities[next].key)
+    handleTabSelect(capabilities[next].key)
     tabRefs.current[next]?.focus()
   }
 
   return (
     <section
       id="services"
-      className="w-full bg-slate-50 px-6 py-24 transition-colors duration-300 dark:bg-slate-950 md:px-12 md:py-32"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => {
+        setIsPaused(false)
+        setTimerKey((k) => k + 1)
+      }}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => {
+        setIsPaused(false)
+        setTimerKey((k) => k + 1)
+      }}
+      className="relative w-full overflow-hidden bg-slate-50 px-6 py-24 transition-colors duration-300 dark:bg-slate-950 md:px-12 md:py-32"
     >
-      <div className="mx-auto max-w-7xl">
+      {/* Arabian Mashrabiya Geometric Backdrop for Arabic mode */}
+      {isRtl && (
+        <>
+          <div className="pointer-events-none absolute inset-0 opacity-45 dark:opacity-45 transition-opacity duration-700">
+            <Image
+              src="/images/arabic-services-mashrabiya.jpg"
+              alt="Arabian Geometric Mashrabiya Lattice"
+              fill
+              sizes="100vw"
+              className="object-cover object-center contrast-[1.05]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-slate-50/50 to-slate-50 dark:from-slate-950 dark:via-slate-950/60 dark:to-slate-950" />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-50/60 via-transparent to-slate-50/60 dark:from-slate-950/60 dark:via-transparent dark:to-slate-950/60" />
+          </div>
+          <div className="pointer-events-none absolute -right-32 top-20 h-96 w-96 rounded-full bg-amber-500/15 blur-[130px]" />
+          <div className="pointer-events-none absolute -left-32 bottom-20 h-96 w-96 rounded-full bg-primary-600/15 blur-[140px]" />
+        </>
+      )}
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
-          eyebrow="Our Expertise"
+          eyebrow={t.services.eyebrow}
           title={
             <>
-              End-to-End <Accent>Technical Capabilities</Accent>
+              {t.services.titleMain} <Accent>{t.services.titleAccent}</Accent>
             </>
           }
-          description="From product strategy and experience design to engineering, automation, and infrastructure, one team takes your system from idea to reliable operation."
+          description={t.services.description}
         />
 
         {/* Tab bar */}
@@ -278,7 +277,7 @@ function Services() {
                   aria-selected={isActive}
                   aria-controls={`capability-panel-${capability.key}`}
                   tabIndex={isActive ? 0 : -1}
-                  onClick={() => setActiveKey(capability.key)}
+                  onClick={() => handleTabSelect(capability.key)}
                   onKeyDown={(event) => onTabKeyDown(event, index)}
                   className={`relative flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 sm:px-5 ${
                     isActive
@@ -290,8 +289,21 @@ function Services() {
                     <motion.span
                       layoutId="capability-tab-pill"
                       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                      className="absolute inset-0 rounded-full bg-slate-100 shadow-sm ring-1 ring-primary-500/20 dark:bg-white/10"
-                    />
+                      className="absolute inset-0 overflow-hidden rounded-full bg-slate-100 shadow-sm ring-1 ring-primary-500/20 dark:bg-white/10"
+                    >
+                      {/* 5-second progress indicator bar */}
+                      {!reduceMotion && (
+                        <span
+                          key={`progress-${activeKey}-${timerKey}`}
+                          className={`absolute bottom-0 inset-x-0 h-[2.5px] rounded-full bg-gradient-to-r from-primary-500 via-accent-400 to-primary-400 animate-tab-progress transition-opacity duration-300 ${
+                            isRtl ? 'origin-right' : 'origin-left'
+                          } ${isPaused ? 'opacity-40' : 'opacity-100'}`}
+                          style={{
+                            animationPlayState: isPaused ? 'paused' : 'running',
+                          }}
+                        />
+                      )}
+                    </motion.span>
                   )}
                   <capability.icon size={16} className="relative z-10" aria-hidden="true" />
                   <span className="relative z-10">{capability.label}</span>

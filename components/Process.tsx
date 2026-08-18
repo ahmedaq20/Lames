@@ -4,68 +4,27 @@ import React, { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Compass, PenTool, Code2, Workflow, Rocket, ArrowUpRight, Clock3, type LucideIcon } from 'lucide-react'
 import { SectionHeading, Accent } from '@/components/ui/SectionHeading'
+import { useTranslation } from '@/locales/translations'
 
 interface Step {
   number: string
   title: string
   tagline: string
   description: string
-  deliverables: string[]
-  // TODO(content): confirm typical durations with the delivery team — these are
-  // honest ranges, not commitments, and are labeled "typical" in the UI.
+  deliverables: readonly string[]
   duration: string
   icon: LucideIcon
 }
 
-const steps: Step[] = [
-  {
-    number: '01',
-    title: 'Discover',
-    tagline: 'Understand before we build',
-    description: 'We study your goals, workflows, and bottlenecks to find where technology creates the most value.',
-    deliverables: ['Technical audit', 'Roadmap', 'Success metrics'],
-    duration: '1–2 weeks',
-    icon: Compass,
-  },
-  {
-    number: '02',
-    title: 'Design',
-    tagline: 'The experience takes shape',
-    description: 'We map the full user journey and craft modern interfaces that carry the weight of your brand.',
-    deliverables: ['User journeys', 'UI prototypes', 'Design system'],
-    duration: '2–3 weeks',
-    icon: PenTool,
-  },
-  {
-    number: '03',
-    title: 'Engineer',
-    tagline: 'Built to production standards',
-    description: 'We build secure, high-performance web and mobile products on architectures made to last.',
-    deliverables: ['Web & mobile apps', 'Scalable backend', 'Code reviews'],
-    duration: '4–8 weeks',
-    icon: Code2,
-  },
-  {
-    number: '04',
-    title: 'Automate',
-    tagline: 'Your tools start working together',
-    description: 'We wire your systems together with n8n workflows and API integrations that remove repetitive work.',
-    deliverables: ['n8n workflows', 'API integrations', 'Fewer manual tasks'],
-    duration: '1–3 weeks',
-    icon: Workflow,
-  },
-  {
-    number: '05',
-    title: 'Operate & Scale',
-    tagline: 'Stable today, ready for tomorrow',
-    description: 'Cloud infrastructure, CI/CD, and security keep your system stable as your business grows.',
-    deliverables: ['Cloud infrastructure', 'CI/CD pipelines', 'Monitoring & security'],
-    duration: 'Ongoing',
-    icon: Rocket,
-  },
-]
+const stepIcons: Record<string, LucideIcon> = {
+  '01': Compass,
+  '02': PenTool,
+  '03': Code2,
+  '04': Workflow,
+  '05': Rocket,
+}
 
-function StepCard({ step }: { step: Step }) {
+function StepCard({ step, typicalDurationLabel }: { step: Step; typicalDurationLabel: string }) {
   return (
     <div className="group relative h-full overflow-hidden rounded-3xl border border-slate-200/80 bg-white/80 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-500/40 hover:shadow-2xl hover:shadow-primary-500/10 dark:border-white/[0.06] dark:bg-slate-900/50 dark:hover:bg-slate-900/80">
       <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-primary-500/20 to-accent-500/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
@@ -90,21 +49,22 @@ function StepCard({ step }: { step: Step }) {
             key={deliverable}
             className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors duration-300 group-hover:border-primary-500/30 group-hover:text-slate-900 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400 dark:group-hover:text-slate-200"
           >
-            <ArrowUpRight size={11} className="text-primary-500" aria-hidden="true" />
+            <ArrowUpRight size={11} className="text-primary-500 rtl:-scale-x-100" aria-hidden="true" />
             {deliverable}
           </li>
         ))}
       </ul>
 
       <p className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
-        <Clock3 size={13} className="text-primary-500" aria-hidden="true" />
-        Typical duration: {step.duration}
+        <Clock3 size={13} className="text-primary-500 shrink-0" aria-hidden="true" />
+        {typicalDurationLabel} {step.duration}
       </p>
     </div>
   )
 }
 
 function Process() {
+  const { t, isRtl } = useTranslation()
   const reduceMotion = useReducedMotion()
   const timelineRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -114,6 +74,16 @@ function Process() {
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 25 })
   const lineScale = useTransform(progress, [0, 1], [0, 1])
 
+  const steps: Step[] = t.process.steps.map((s) => ({
+    number: s.number,
+    title: s.title,
+    tagline: s.tagline,
+    description: s.description,
+    deliverables: s.deliverables,
+    duration: s.duration,
+    icon: stepIcons[s.number] || Compass,
+  }))
+
   return (
     <section
       id="process"
@@ -122,15 +92,23 @@ function Process() {
       <div className="absolute inset-0 bg-grid-light dark:bg-grid-dark [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,black,transparent)]" />
       <div className="pointer-events-none absolute -top-32 left-1/2 h-[380px] w-[680px] -translate-x-1/2 rounded-full bg-primary-600/10 blur-[140px]" />
 
+      {/* Arabian Desert Trail Glow for Arabic mode */}
+      {isRtl && (
+        <>
+          <div className="pointer-events-none absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-amber-500/10 blur-[140px]" />
+          <div className="pointer-events-none absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-primary-500/15 blur-[140px]" />
+        </>
+      )}
+
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
-          eyebrow="How We Work"
+          eyebrow={t.process.eyebrow}
           title={
             <>
-              From first conversation to a <Accent>running system</Accent>
+              {t.process.titleMain} <Accent>{t.process.titleAccent}</Accent>
             </>
           }
-          description="One connected process. No handoffs between agencies, no gaps between design, code, and operations."
+          description={t.process.description}
           className="mb-16 md:mb-20"
         />
 
@@ -145,7 +123,7 @@ function Process() {
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 1.6, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="absolute left-[10%] right-[10%] top-1/2 h-px -translate-y-1/2 origin-left bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500"
+              className="absolute left-[10%] right-[10%] top-1/2 h-px -translate-y-1/2 origin-left rtl:origin-right bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500"
             />
             <div className="relative grid grid-cols-5">
               {steps.map((step, index) => (
@@ -175,7 +153,7 @@ function Process() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
               >
-                <StepCard step={step} />
+                <StepCard step={step} typicalDurationLabel={t.process.typicalDuration} />
               </motion.div>
             ))}
           </div>
@@ -184,11 +162,11 @@ function Process() {
         {/* Mobile / tablet: vertical timeline */}
         <div ref={timelineRef} className="relative lg:hidden">
           {/* Track */}
-          <div className="absolute bottom-8 left-6 top-8 w-px -translate-x-1/2 bg-slate-200 dark:bg-white/[0.07]" />
+          <div className="absolute bottom-8 left-6 rtl:left-auto rtl:right-6 top-8 w-px -translate-x-1/2 rtl:translate-x-1/2 bg-slate-200 dark:bg-white/[0.07]" />
           {/* Animated fill */}
           <motion.div
             style={{ scaleY: reduceMotion ? 1 : lineScale }}
-            className="absolute bottom-8 left-6 top-8 w-px -translate-x-1/2 origin-top bg-gradient-to-b from-primary-500 via-accent-500 to-primary-500"
+            className="absolute bottom-8 left-6 rtl:left-auto rtl:right-6 top-8 w-px -translate-x-1/2 rtl:translate-x-1/2 origin-top bg-gradient-to-b from-primary-500 via-accent-500 to-primary-500"
           />
 
           <div className="flex flex-col gap-8">
@@ -213,7 +191,7 @@ function Process() {
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
                 >
-                  <StepCard step={step} />
+                  <StepCard step={step} typicalDurationLabel={t.process.typicalDuration} />
                 </motion.div>
               </div>
             ))}

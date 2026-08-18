@@ -3,47 +3,45 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Code2, Workflow, Cloud, Palette, ShieldCheck } from 'lucide-react';
+import { Code2, Workflow, Cloud, Palette, ShieldCheck, type LucideIcon } from 'lucide-react';
 import { PrimaryCta } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/SectionHeading';
+import { useTranslation } from '@/locales/translations';
 
-const capabilities = [
-  {
-    title: 'Product Engineering',
-    description: 'Web, mobile, and custom systems built to production standards.',
-    icon: Code2,
-  },
-  {
-    title: 'Business Automation',
-    description: 'n8n workflows and integrations that remove repetitive work.',
-    icon: Workflow,
-  },
-  {
-    title: 'Cloud & DevOps',
-    description: 'Secure infrastructure, CI/CD, and zero-drama deployments.',
-    icon: Cloud,
-  },
-  {
-    title: 'UI/UX Design',
-    description: 'Journey-mapped interfaces that carry the weight of your brand.',
-    icon: Palette,
-  },
-];
-
-// Verifiable facts only. TODO(trust): swap in real delivery metrics (projects
-// shipped, hours automated, client count) once they can be backed up.
-const facts = [
-  { value: '5', label: 'Disciplines: UI/UX, frontend, backend, mobile & DevOps' },
-  { value: 'EN · AR', label: 'We work with clients in English and Arabic' },
-  { value: 'One team', label: 'Strategy to operations — no handoffs' },
-];
+const capabilityIcons: LucideIcon[] = [Code2, Workflow, Cloud, Palette];
 
 function About() {
+  const { t, isRtl } = useTranslation();
+
+  const capabilities = t.about.capabilities.map((item, i) => ({
+    title: item.title,
+    description: item.description,
+    icon: capabilityIcons[i] || Code2,
+  }));
+
   return (
     <section id="about" className="w-full py-24 md:py-32 px-6 md:px-12 relative bg-white dark:bg-slate-900/30 transition-colors duration-300 overflow-hidden">
-      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[420px] w-[420px] rounded-full bg-primary-600/5 blur-[120px] dark:bg-primary-600/10" />
+      {/* Arabian Coffee & Hospitality Backdrop for Arabic mode */}
+      {isRtl && (
+        <div className="pointer-events-none absolute inset-0 opacity-45 dark:opacity-50 transition-opacity duration-700">
+          <Image
+            src="/images/arabic-about-coffee.jpg"
+            alt="Arabian Hospitality & Coffee Backdrop"
+            fill
+            sizes="100vw"
+            className="object-cover object-center -scale-x-100 contrast-[1.05]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/45 to-white dark:from-[#05070d] dark:via-[#05070d]/60 dark:to-[#05070d]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-transparent to-white/60 dark:from-[#05070d]/60 dark:via-transparent dark:to-[#05070d]/60" />
+        </div>
+      )}
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-20">
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[420px] w-[420px] rounded-full bg-primary-600/5 blur-[120px] dark:bg-primary-600/10" />
+      {isRtl && (
+        <div className="pointer-events-none absolute top-10 right-0 h-[400px] w-[400px] rounded-full bg-amber-500/10 blur-[140px]" />
+      )}
+
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-20">
 
         {/* Visual */}
         <motion.div
@@ -63,13 +61,13 @@ function About() {
               height={800}
               className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
             {/* Caption inside the image */}
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary-300">One Integrated Team</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary-300">{t.about.imageBadge.tagline}</p>
               <p className="mt-2 max-w-sm text-sm font-medium leading-relaxed text-white/90">
-                Strategy, design, engineering, automation, and operations — working as one.
+                {t.about.imageBadge.text}
               </p>
             </div>
           </div>
@@ -80,14 +78,14 @@ function About() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="absolute -top-6 -right-4 md:-right-8 z-20 hidden sm:flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 pr-5 shadow-xl dark:border-white/10 dark:bg-slate-950"
+            className="absolute -top-6 -right-4 md:-right-8 rtl:-right-auto rtl:-left-4 rtl:md:-left-8 z-20 hidden sm:flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 pr-5 rtl:pr-4 rtl:pl-5 shadow-xl dark:border-white/10 dark:bg-slate-950"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white shadow-lg shadow-primary-500/25">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white shadow-lg shadow-primary-500/25 shrink-0">
               <ShieldCheck size={20} />
             </span>
             <div>
-              <p className="text-sm font-bold text-slate-900 dark:text-white">Security-first delivery</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Built for performance & flexibility</p>
+              <p className="text-sm font-bold text-slate-900 dark:text-white">{t.about.floatingBadge.title}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{t.about.floatingBadge.subtitle}</p>
             </div>
           </motion.div>
         </motion.div>
@@ -101,16 +99,13 @@ function About() {
           className="flex-1 space-y-10 order-1 md:order-2"
         >
           <div>
-            <h3 className="text-primary-600 dark:text-primary-400 font-bold mb-4 uppercase tracking-[0.3em] text-xs">Who We Are</h3>
+            <h3 className="text-primary-600 dark:text-primary-400 font-bold mb-4 uppercase tracking-[0.3em] text-xs">{t.about.eyebrow}</h3>
             <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight mb-6">
-              We are more than just <br />
-              <Accent>a Development Vendor</Accent>
+              {t.about.titleMain} <br />
+              <Accent>{t.about.titleAccent}</Accent>
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-              Lames is an integrated digital agency specializing in product engineering and business automation.
-              We don&apos;t hand you code and walk away — we deliver a complete system: an experience that attracts
-              customers, engineering that keeps it stable, automation that runs your routine operations, and
-              infrastructure ready to grow with you.
+              {t.about.description}
             </p>
           </div>
 
@@ -138,7 +133,7 @@ function About() {
 
           {/* Facts */}
           <div className="grid grid-cols-3 gap-6 border-t border-slate-200 pt-8 dark:border-white/10">
-            {facts.map((fact) => (
+            {t.about.facts.map((fact) => (
               <div key={fact.value}>
                 <p className="font-display text-2xl font-bold text-primary-600 dark:text-primary-400 md:text-3xl">{fact.value}</p>
                 <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{fact.label}</p>
@@ -158,6 +153,6 @@ function About() {
       </div>
     </section>
   );
-};
+}
 
 export default About;

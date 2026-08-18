@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from 'next/font/local'
+import { Cairo } from 'next/font/google'
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ThemeInitializer from "@/components/ThemeInitializer";
+import LanguageInitializer from "@/components/LanguageInitializer";
 import SmoothScroll from "@/components/Experience/SmoothScroll";
 
 const inter = localFont({
@@ -19,17 +21,23 @@ const spaceGrotesk = localFont({
   weight: '300 700',
   display: 'swap',
 })
+const cairo = Cairo({
+  subsets: ['arabic', 'latin'],
+  variable: '--font-cairo',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lames.io'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Lames | Digital Product Engineering & Automation',
+    default: 'Lames | Digital Product Engineering & Automation | لامِس',
     template: '%s | Lames',
   },
   description:
-    'Lames builds secure digital products, intelligent business automations, and scalable cloud systems for ambitious companies.',
+    'Lames builds secure digital products, intelligent business automations, and scalable cloud systems for ambitious companies. لامِس لهندسة المنتجات الرقمية وأتمتة الأعمال.',
   keywords: [
     'digital product engineering',
     'business process automation',
@@ -40,6 +48,10 @@ export const metadata: Metadata = {
     'DevOps',
     'UI/UX design',
     'Lames',
+    'هندسة المنتجات الرقمية',
+    'أتمتة الأعمال',
+    'تطوير البرمجيات',
+    'لامس',
   ],
   alternates: {
     canonical: '/',
@@ -47,19 +59,20 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: siteUrl,
-    siteName: 'Lames',
-    title: 'Lames | Digital Product Engineering & Automation',
+    siteName: 'Lames | لامِس',
+    title: 'Lames | Digital Product Engineering & Automation | لامِس',
     description:
-      'We build systems that work for you — secure digital products, intelligent automations, and scalable cloud systems.',
-    locale: 'en_US',
+      'نحن لا نبني تطبيقات فقط، نحن نبني أنظمة تعمل بدلاً عنك — We build systems that work for you.',
+    locale: 'ar_SA',
+    alternateLocale: ['en_US'],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@LAMESolution',
     creator: '@LAMESolution',
-    title: 'Lames | Digital Product Engineering & Automation',
+    title: 'Lames | Digital Product Engineering & Automation | لامِس',
     description:
-      'We build systems that work for you — secure digital products, intelligent automations, and scalable cloud systems.',
+      'نحن لا نبني تطبيقات فقط، نحن نبني أنظمة تعمل بدلاً عنك — We build systems that work for you.',
   },
   robots: {
     index: true,
@@ -76,7 +89,7 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Lames',
+  name: 'Lames | لامِس',
   url: siteUrl,
   logo: `${siteUrl}/images/Logo.png`,
   description:
@@ -89,7 +102,7 @@ const organizationJsonLd = {
     '@type': 'ContactPoint',
     telephone: '+970-59-891-3350',
     contactType: 'sales',
-    availableLanguage: ['en', 'ar'],
+    availableLanguage: ['ar', 'en'],
   },
 };
 
@@ -100,20 +113,32 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
-      lang="en"
-      dir="ltr"
+      className={`${inter.variable} ${spaceGrotesk.variable} ${cairo.variable}`}
+      lang="ar"
+      dir="rtl"
       suppressHydrationWarning
     >
       <head>
-        {/* Apply the saved theme before first paint to avoid a flash of the wrong theme (FOUC) */}
+        {/* Apply the saved theme and language before first paint to avoid flash (FOUC) */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})();`,
+            __html: `(function(){try{
+              var t=localStorage.getItem('theme');
+              if(t==='dark'){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}
+              var l=localStorage.getItem('language');
+              if(l==='en'){
+                document.documentElement.setAttribute('lang','en');
+                document.documentElement.setAttribute('dir','ltr');
+              }else{
+                document.documentElement.setAttribute('lang','ar');
+                document.documentElement.setAttribute('dir','rtl');
+              }
+            }catch(e){}})();`,
           }}
         />
       </head>
       <ThemeInitializer />
+      <LanguageInitializer />
       <body className="antialiased selection:bg-primary-500/30">
         <script
           type="application/ld+json"

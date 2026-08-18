@@ -37,6 +37,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-display: var(--font-space-grotesk);
+  --font-arabic: var(--font-cairo);
 
   /* Primary palette */
   --color-primary-50: var(--color-primary-50);
@@ -73,6 +74,12 @@ body {
   cursor: auto !important;
 }
 
+[dir="rtl"],
+[dir="rtl"] body {
+  font-family: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: normal !important;
+}
+
 /* Visible keyboard focus everywhere; components with focus-visible:ring
    utilities override this via outline-none on the ring styles. */
 :focus-visible {
@@ -83,6 +90,14 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4 {
+  font-family: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: normal !important;
 }
 
 /* ============ Custom Quality Animations ============ */
@@ -121,6 +136,15 @@ h1, h2, h3, h4 {
 @keyframes float-diagonal {
   0%, 100% { transform: translate(0px, 0px); }
   50% { transform: translate(15px, -15px); }
+}
+
+@keyframes tab-progress {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.animate-tab-progress {
+  animation: tab-progress 5s linear forwards;
 }
 
 .animate-liquid {
@@ -193,4 +217,13 @@ h1, h2, h3, h4 {
 
 .dark .bg-noise {
   opacity: 0.03;
+}
+
+/* ============ Subtle Arabian Tech Lattice Patterns for RTL ============ */
+[dir="rtl"] .bg-grid-dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px, 72px 72px, 36px 36px;
 }

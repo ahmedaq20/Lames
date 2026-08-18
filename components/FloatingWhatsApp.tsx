@@ -2,16 +2,20 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/locales/translations'
 
-const WHATSAPP_URL = 'https://wa.me/970598913350?text=' + encodeURIComponent("Hi Lames, I'd like to talk about a project.")
+const WHATSAPP_NUMBER = '966541897150'
 
 function FloatingWhatsApp() {
+  const { t } = useTranslation()
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.floatingWhatsApp.defaultMessage)}`
+
   return (
     <motion.a
-      href={WHATSAPP_URL}
+      href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with Lames on WhatsApp"
+      aria-label={t.floatingWhatsApp.tooltip}
       initial={{ opacity: 0, scale: 0.5, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ delay: 1.5, type: 'spring', stiffness: 260, damping: 20 }}
@@ -27,8 +31,8 @@ function FloatingWhatsApp() {
       </svg>
 
       {/* Tooltip */}
-      <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white opacity-0 shadow-xl transition-opacity duration-300 group-hover:opacity-100 dark:bg-white dark:text-slate-900">
-        Chat with us
+      <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white opacity-0 shadow-xl transition-opacity duration-300 group-hover:opacity-100 dark:bg-white dark:text-slate-900 rtl:right-auto rtl:left-full rtl:ml-3 rtl:mr-0">
+        {t.floatingWhatsApp.tooltip}
       </span>
     </motion.a>
   )

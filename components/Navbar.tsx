@@ -1,20 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, Moon, Sun, X } from 'lucide-react';
+import { Globe, Menu, Moon, Sun, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { useThemeStore } from '@/store/useThemeStore';
-
-const menuItems = [
-  { key: 'home', label: 'Home', href: '/#home' },
-  { key: 'services', label: 'Services', href: '/#services' },
-  { key: 'process', label: 'Process', href: '/#process' },
-  { key: 'about', label: 'About', href: '/#about' },
-  { key: 'faq', label: 'FAQ', href: '/#faq' },
-];
+import { useTranslation } from '@/locales/translations';
 
 const spySections = ['home', 'services', 'process', 'about', 'faq'];
 
@@ -23,7 +16,16 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const { theme, toggleTheme } = useThemeStore();
+  const { t, language, toggleLanguage } = useTranslation();
   const pathname = usePathname();
+
+  const menuItems = [
+    { key: 'home', label: t.navbar.menu.home, href: '/#home' },
+    { key: 'services', label: t.navbar.menu.services, href: '/#services' },
+    { key: 'process', label: t.navbar.menu.process, href: '/#process' },
+    { key: 'about', label: t.navbar.menu.about, href: '/#about' },
+    { key: 'faq', label: t.navbar.menu.faq, href: '/#faq' },
+  ];
 
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
@@ -69,16 +71,16 @@ export default function Navbar() {
     <nav
       className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out rounded-full ${scrolled
         ? 'top-4 mx-4 md:mx-auto max-w-6xl bg-white/50 dark:bg-[#05070d]/60 backdrop-blur-2xl border border-white/40 dark:border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] py-3 dark:shadow-[0_8px_40px_-8px_rgba(37,99,235,0.25)]'
-        : 'top-0 w-full bg-white/60 dark:bg-[#05070d]/50 backdrop-blur-xl py-5 border border-white/20 dark:border-white/5 mt-4 mx-4 md:mx-auto max-w-7xl'
+        : 'top-4 mx-4 md:mx-auto max-w-7xl bg-white/60 dark:bg-[#05070d]/50 backdrop-blur-xl py-3.5 md:py-5 border border-white/20 dark:border-white/5'
         }`}
     >
       {/* Scroll progress bar along the pill's bottom edge */}
       <motion.div
         style={{ scaleX: progress }}
-        className="absolute bottom-0 left-8 right-8 h-[2px] origin-left rounded-full bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500"
+        className="absolute bottom-0 left-8 right-8 h-[2px] origin-left rtl:origin-right rounded-full bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500"
       />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="relative flex items-center">
           <Image
@@ -129,8 +131,19 @@ export default function Navbar() {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
           <Link href='/contact' className="bg-primary-600 backdrop-blur-md text-white text-sm font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:bg-primary-500 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] border border-primary-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950">
-            Book a Discovery Call
+            {t.navbar.cta}
           </Link>
+          {/* Language Switcher */}
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300"
+            aria-label="Switch language"
+            title={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
+          >
+            <Globe size={16} className="text-primary-500" />
+            <span>{t.navbar.switchLanguageCode}</span>
+          </button>
+          {/* Theme Switcher */}
           <button
             onClick={toggleTheme}
             className="p-2.5 rounded-full text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300 hover:rotate-12"
@@ -141,7 +154,15 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-white/40 dark:bg-white/10 border border-white/50 dark:border-white/10 backdrop-blur-md shadow-sm"
+            aria-label="Switch language"
+          >
+            <Globe size={15} className="text-primary-500" />
+            <span>{t.navbar.switchLanguageCode}</span>
+          </button>
           <button
             onClick={toggleTheme}
             className="p-2 rounded-xl text-slate-700 dark:text-slate-300 bg-white/40 dark:bg-white/10 border border-white/50 dark:border-white/10 backdrop-blur-md shadow-sm"
@@ -167,7 +188,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="absolute top-[calc(100%+16px)] left-4 right-4 bg-slate-50 dark:bg-slate-950 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-4 flex flex-col gap-1 md:hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_48px_-10px_rgba(37,99,235,0.3)]"
+              className="absolute top-[calc(100%+16px)] left-0 right-0 bg-slate-50 dark:bg-slate-950 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-3xl p-4 flex flex-col gap-1 md:hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_48px_-10px_rgba(37,99,235,0.3)]"
             >
               {menuItems.map((item, index) => {
                 const isActive = activeKey === item.key;
@@ -206,7 +227,7 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                   className="block bg-primary-600 backdrop-blur-md border border-primary-500/40 text-white font-bold py-3.5 rounded-2xl mt-2 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] hover:bg-primary-500 transition-colors text-center"
                 >
-                  Book a Discovery Call
+                  {t.navbar.cta}
                 </Link>
               </motion.div>
             </motion.div>

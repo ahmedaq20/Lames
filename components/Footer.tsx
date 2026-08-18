@@ -1,27 +1,14 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PrimaryCta } from '@/components/ui/Button'
-
-const services = [
-  { label: 'Digital Product Engineering', href: '/#services' },
-  { label: 'Business Process Automation', href: '/#automation' },
-  { label: 'Cloud, DevOps & Security', href: '/#services' },
-  { label: 'UI/UX Design', href: '/#services' },
-  { label: 'AI Agents & Intelligent Systems', href: '/#services' },
-]
-
-const company = [
-  { label: 'About', href: '/#about' },
-  { label: 'How We Work', href: '/#process' },
-  { label: 'Why Lames', href: '/#why-lames' },
-  { label: 'FAQ', href: '/#faq' },
-  { label: 'Contact', href: '/contact' },
-]
+import { useTranslation } from '@/locales/translations'
 
 const EMAIL = 'hello@lames.io'
 const PHONE_DISPLAY = '+970 59 891 3350'
-const PHONE_HREF = 'tel:+970598913350'
+const PHONE_HREF = 'tel:+966541897150'
 
 const socials = [
   {
@@ -54,7 +41,7 @@ const socials = [
   },
   {
     name: 'WhatsApp',
-    href: 'https://wa.me/970598913350',
+    href: 'https://wa.me/966541897150',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]" aria-hidden="true">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413" />
@@ -67,9 +54,31 @@ const linkClasses =
   'transition-colors hover:text-primary-600 dark:hover:text-primary-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 rounded-sm'
 
 function Footer() {
+  const { t, isRtl } = useTranslation()
+
   return (
-    <footer className="w-full border-t border-slate-200 bg-slate-50 pt-20 transition-colors duration-300 dark:border-white/5 dark:bg-slate-950">
-      <div className="mx-auto max-w-7xl px-6 pb-12 md:px-12">
+    <footer className="relative w-full overflow-hidden border-t border-slate-200 bg-slate-50 pt-20 transition-colors duration-300 dark:border-white/5 dark:bg-slate-950">
+      {/* Arabian Desert Caravan Backdrop for Arabic mode */}
+      {isRtl && (
+        <>
+          <div className="pointer-events-none absolute inset-0 opacity-65 dark:opacity-55 transition-opacity duration-700">
+            <Image
+              src="/images/arabic-footer-desert.webp"
+              alt="Arabian Desert Caravan Horizon"
+              fill
+              sizes="100vw"
+              className="object-cover object-bottom contrast-[1.08] saturate-[1.1]"
+            />
+            {/* Soft ambient gradients to maintain 100% link and text clarity */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-slate-50/40 to-slate-50 dark:from-slate-950 dark:via-slate-950/45 dark:to-slate-950" />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-50/50 via-transparent to-slate-50/50 dark:from-slate-950/50 dark:via-transparent dark:to-slate-950/50" />
+          </div>
+          <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-full -translate-x-1/2 bg-gradient-to-b from-amber-500/10 via-primary-500/5 to-transparent blur-2xl" />
+          <div className="pointer-events-none absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
+        </>
+      )}
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pb-12 md:px-12">
         <div className="mb-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.3fr]">
           {/* Brand */}
           <div className="space-y-6">
@@ -78,11 +87,11 @@ function Footer() {
               <Image src="/images/logo-dark-new.png" alt="Lames" width={100} height={28} className="hidden object-contain dark:block" />
             </Link>
             <p className="max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              Lames engineers digital products, automated workflows, and secure cloud systems that help businesses operate efficiently and scale with confidence.
+              {t.footer.description}
             </p>
             <p className="font-display text-lg font-bold text-slate-900 dark:text-white">
-              We don&apos;t just build apps.{' '}
-              <span className="text-primary-600 dark:text-primary-400">We build systems that work for you.</span>
+              {t.footer.sloganMain}{' '}
+              <span className="text-primary-600 dark:text-primary-400">{t.footer.sloganAccent}</span>
             </p>
             <div className="flex items-center gap-3">
               {socials.map((social) => (
@@ -102,9 +111,9 @@ function Footer() {
 
           {/* Company */}
           <nav aria-label="Company">
-            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">Company</h4>
+            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">{t.footer.companyTitle}</h4>
             <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400">
-              {company.map((link) => (
+              {t.footer.companyLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className={linkClasses}>{link.label}</Link>
                 </li>
@@ -114,9 +123,9 @@ function Footer() {
 
           {/* Services */}
           <nav aria-label="Services">
-            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">Services</h4>
+            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">{t.footer.servicesTitle}</h4>
             <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400">
-              {services.map((service) => (
+              {t.footer.servicesLinks.map((service) => (
                 <li key={service.label}>
                   <Link href={service.href} className={linkClasses}>{service.label}</Link>
                 </li>
@@ -126,9 +135,9 @@ function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">Start a Conversation</h4>
+            <h4 className="mb-6 font-bold text-slate-900 dark:text-white">{t.footer.contactTitle}</h4>
             <p className="mb-6 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              Have a product idea, an operational bottleneck, or disconnected systems? Let&apos;s find the right technical path forward.
+              {t.footer.contactDescription}
             </p>
             <PrimaryCta size="sm" className="mb-6" />
             <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
@@ -138,20 +147,15 @@ function Footer() {
               <li>
                 <a href={PHONE_HREF} className={`font-medium ${linkClasses}`}>{PHONE_DISPLAY}</a>
               </li>
-              {/* TODO(trust): confirm and publish real business details — enterprise
-                  buyers look for these before reaching out:
-                  <li>Office address / registered entity</li>
-                  <li>Business hours, e.g. Sun–Thu · 9:00–17:00 (GMT+2)</li>
-                  <li>Response-time promise, e.g. "We reply within one business day"</li> */}
             </ul>
           </div>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 md:flex-row dark:border-white/5">
-          <p className="text-sm text-slate-500">© {new Date().getFullYear()} Lames. All rights reserved.</p>
+          <p className="text-sm text-slate-500">© {new Date().getFullYear()} Lames. {t.footer.rights}</p>
           <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
-            <Link href="/privacy" className="transition-colors hover:text-slate-900 dark:hover:text-white">Privacy Policy</Link>
-            <Link href="/terms" className="transition-colors hover:text-slate-900 dark:hover:text-white">Terms of Service</Link>
+            <Link href="/privacy" className="transition-colors hover:text-slate-900 dark:hover:text-white">{t.footer.privacy}</Link>
+            <Link href="/terms" className="transition-colors hover:text-slate-900 dark:hover:text-white">{t.footer.terms}</Link>
           </div>
         </div>
       </div>

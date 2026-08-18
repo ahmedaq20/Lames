@@ -1,12 +1,15 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowUpRight, SearchCheck } from 'lucide-react'
+import { useTranslation } from '@/locales/translations'
 
 /**
  * Global CTA system.
  *
  * Exactly two conversion actions exist on the site:
- *   Primary   →  "Book a Discovery Call"   → /contact
- *   Secondary →  "Get a Free Audit"        → /contact#contact-form
+ *   Primary   →  "Book a Discovery Call" / "احجز مكالمة استكشافية"   → /contact
+ *   Secondary →  "Get a Free Audit"      / "احصل على تدقيق مجاني"    → /contact#contact-form
  *
  * Always use <PrimaryCta /> / <SecondaryCta /> for conversion CTAs so labels,
  * routes, and styling never drift. <Button> is the underlying primitive for
@@ -76,6 +79,8 @@ export function PrimaryCta({
   size?: ButtonSize
   className?: string
 }) {
+  const { t } = useTranslation()
+
   return (
     <Button
       variant="primary"
@@ -84,12 +89,12 @@ export function PrimaryCta({
       className={className}
       icon={
         <ArrowUpRight
-          className="h-[1.15em] w-[1.15em] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          className="h-[1.15em] w-[1.15em] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
           aria-hidden="true"
         />
       }
     >
-      Book a Discovery Call
+      {t.buttons.primaryCta}
     </Button>
   )
 }
@@ -103,6 +108,8 @@ export function SecondaryCta({
   onDark?: boolean
   className?: string
 }) {
+  const { t } = useTranslation()
+
   return (
     <Button
       variant="secondary"
@@ -113,7 +120,7 @@ export function SecondaryCta({
       icon={undefined}
     >
       <SearchCheck className="h-[1.15em] w-[1.15em]" aria-hidden="true" />
-      Get a Free Audit
+      {t.buttons.secondaryCta}
     </Button>
   )
 }
