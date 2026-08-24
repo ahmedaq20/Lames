@@ -7,7 +7,7 @@ import { PrimaryCta } from '@/components/ui/Button'
 import { useTranslation } from '@/locales/translations'
 
 const EMAIL = 'hello@lames.io'
-const PHONE_DISPLAY = '+970 59 891 3350'
+const PHONE_DISPLAY = '+966 54 189 7150'
 const PHONE_HREF = 'tel:+966541897150'
 
 const socials = [
