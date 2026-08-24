@@ -201,15 +201,14 @@ function WorkflowPanel({ highlightedNode }: { highlightedNode: string | null }) 
                 <motion.div
                   animate={reduceMotion ? undefined : { scale: state === 'running' || highlighted ? 1.07 : 1 }}
                   transition={{ duration: 0.3, ease: easeOutExpo }}
-                  className={`relative flex w-[58px] flex-col items-center gap-1 rounded-xl border p-1.5 transition-[border-color,box-shadow,opacity] duration-300 min-[380px]:w-[64px] sm:w-[80px] sm:gap-1.5 sm:p-2 ${
-                    highlighted
-                      ? 'border-primary-300 bg-white/[0.09] shadow-[0_0_28px_rgba(96,165,250,0.5)]'
-                      : state === 'running'
-                        ? 'border-primary-400/70 bg-white/[0.07] shadow-[0_0_24px_rgba(96,165,250,0.4)]'
-                        : state === 'success'
-                          ? 'border-white/15 bg-white/[0.05] shadow-[0_0_12px_rgba(96,165,250,0.1)]'
-                          : 'border-white/10 bg-white/[0.03] opacity-70'
-                  }`}
+                  className={`relative flex w-[58px] flex-col items-center gap-1 rounded-xl border p-1.5 transition-[border-color,box-shadow,opacity] duration-300 min-[380px]:w-[64px] sm:w-[80px] sm:gap-1.5 sm:p-2 ${highlighted
+                    ? 'border-primary-300 bg-white/[0.09] shadow-[0_0_28px_rgba(96,165,250,0.5)]'
+                    : state === 'running'
+                      ? 'border-primary-400/70 bg-white/[0.07] shadow-[0_0_24px_rgba(96,165,250,0.4)]'
+                      : state === 'success'
+                        ? 'border-white/15 bg-white/[0.05] shadow-[0_0_12px_rgba(96,165,250,0.1)]'
+                        : 'border-white/10 bg-white/[0.03] opacity-70'
+                    }`}
                 >
                   <span className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br text-white transition-opacity duration-300 sm:h-9 sm:w-9 ${node.chip} ${state === 'queued' ? 'opacity-60' : ''}`}>
                     <node.icon size={14} className="sm:size-4" aria-hidden="true" />
@@ -323,9 +322,9 @@ export default function AutomationShowcase() {
       >
         {/* Left column */}
         <div>
-          <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white/70 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-primary-600 shadow-sm dark:border-primary-400/20 dark:bg-primary-400/10 dark:text-primary-300">
+          {/* <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white/70 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-primary-600 shadow-sm dark:border-primary-400/20 dark:bg-primary-400/10 dark:text-primary-300">
             <Sparkles size={12} aria-hidden="true" /> {t.automation.badge}
-          </motion.div>
+          </motion.div> */}
 
           <motion.h2 variants={item} className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
             {t.automation.titleMain} <Accent>{t.automation.titleAccent}</Accent>

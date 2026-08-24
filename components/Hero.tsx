@@ -52,7 +52,7 @@ function Hero() {
           style={shouldReduceMotion ? undefined : { y: textY }}
           className="mx-auto max-w-6xl text-center"
         >
-          <motion.div
+          {/* <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={entrance(0.2)}
@@ -60,7 +60,7 @@ function Hero() {
           >
             <span className="h-2 w-2 rounded-full bg-primary-400 shadow-[0_0_12px_rgba(96,165,250,0.8)]" />
             {t.hero.badge}
-          </motion.div>
+          </motion.div> */}
 
           <h1 className="mb-8 font-display text-4xl font-bold leading-[1.12] md:leading-[1.05] tracking-tight md:tracking-tighter text-white md:text-6xl lg:text-[5rem]">
             {titleWords.map((word, index) => (

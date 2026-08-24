@@ -19,7 +19,7 @@ export const en = {
     badge: 'Digital Product Engineering & Automation Agency',
     titleWords: ['Custom', 'software,', 'automation', '&', 'cloud', 'systems', 'that', 'work', 'for', 'you'],
     gradientStartWordIndex: 5,
-    subtitle: 'Lames is one engineering team for the whole system: we design your product, build it for web and mobile, automate your operations with AI and n8n, and run it on secure, scalable cloud infrastructure.',
+    subtitle: 'Lames is one engineering team for the whole system: we design your product, build it for web and mobile, automate your operations with AI, and run it on secure, scalable cloud infrastructure.',
     marquee: [
       'UI/UX Design',
       'Web Engineering',
@@ -64,19 +64,19 @@ export const en = {
           'Performance-focused delivery',
         ],
       },
-      {
-        key: 'automation',
-        label: 'Automation',
-        title: 'Business Process Automation',
-        description: 'We turn repetitive work into reliable automated workflows with n8n and custom API integrations, so information moves between your tools without manual effort.',
-        features: [
-          'n8n workflow design & operation',
-          'API integrations between your tools',
-          'Automated reporting & alerts',
-          'Fewer manual tasks, fewer errors',
-          'Monitored, recoverable workflows',
-        ],
-      },
+      // {
+      //   key: 'automation',
+      //   label: 'Automation',
+      //   title: 'Business Process Automation',
+      //   description: 'We turn repetitive work into reliable automated workflows with n8n and custom API integrations, so information moves between your tools without manual effort.',
+      //   features: [
+      //     'n8n workflow design & operation',
+      //     'API integrations between your tools',
+      //     'Automated reporting & alerts',
+      //     'Fewer manual tasks, fewer errors',
+      //     'Monitored, recoverable workflows',
+      //   ],
+      // },
       {
         key: 'infrastructure',
         label: 'Infrastructure',
@@ -112,7 +112,7 @@ export const en = {
           'AI agents for routine operations',
           'Customer & support assistants',
           'Document and data extraction',
-          'AI steps inside n8n workflows',
+          'AI steps inside workflows',
           'Human-in-the-loop controls',
         ],
       },
@@ -159,7 +159,7 @@ export const en = {
     titleAccent: 'Business Workflows',
     description: 'We turn repetitive work into reliable automated workflows and connect your tools so information moves smoothly across your business.',
     features: [
-      { key: 'crm', title: 'Workflow Automation', desc: 'Build smart workflows with n8n and custom logic.' },
+      { key: 'crm', title: 'Workflow Automation', desc: 'Build smart workflows with custom logic.' },
       { key: 'notify', title: 'API Integrations', desc: 'Connect any tool or service using powerful APIs.' },
       { key: 'ai', title: 'AI Agents', desc: 'Automate tasks and decisions with intelligent agents.' },
       { key: 'email', title: 'Reporting & Alerts', desc: 'Get real-time insights and instant notifications.' },
@@ -224,7 +224,7 @@ export const en = {
         number: '04',
         title: 'Automate',
         tagline: 'Your tools start working together',
-        description: 'We wire your systems together with n8n workflows and API integrations that remove repetitive work.',
+        description: 'We wire your systems together with workflows and API integrations that remove repetitive work.',
         deliverables: ['n8n workflows', 'API integrations', 'Fewer manual tasks'],
         duration: '1–3 weeks',
       },
@@ -262,7 +262,7 @@ export const en = {
       },
       {
         title: 'Business Automation',
-        description: 'n8n workflows and integrations that remove repetitive work.',
+        description: 'workflows and integrations that remove repetitive work.',
       },
       {
         title: 'Cloud & DevOps',
