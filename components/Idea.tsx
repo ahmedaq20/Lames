@@ -53,10 +53,7 @@ function Idea() {
           <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] border border-white/10" />
 
           <div className="relative z-10 mx-auto max-w-3xl space-y-8">
-            <p className="text-xs font-bold uppercase tracking-[0.35em] text-primary-400">
-              {t.idea.eyebrow}
-            </p>
-            <h2 className="font-display text-4xl font-bold tracking-tight text-white md:text-6xl">
+            <h2 className="font-display text-4xl font-bold leading-[1.3] tracking-tight text-white md:text-6xl md:leading-[1.25]">
               {t.idea.titleMain} <span className="text-primary-400">{t.idea.titleAccent}</span>{t.idea.titleSuffix}
             </h2>
             <p className="text-xl leading-relaxed text-slate-300">

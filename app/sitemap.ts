@@ -11,6 +11,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${siteUrl}/portfolio`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    ...[
+      'b2b-commerce',
+      'fintech-app',
+      'n8n-automation',
+      'cloud-devsecops',
+      'headless-media',
+      'logistics-delivery',
+    ].map((slug) => ({
+      url: `${siteUrl}/portfolio/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    })),
+    {
       url: `${siteUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

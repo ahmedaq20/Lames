@@ -23,6 +23,7 @@ export default function Navbar() {
     { key: 'home', label: t.navbar.menu.home, href: '/#home' },
     { key: 'services', label: t.navbar.menu.services, href: '/#services' },
     { key: 'process', label: t.navbar.menu.process, href: '/#process' },
+    { key: 'portfolio', label: t.navbar.menu.portfolio, href: '/portfolio' },
     { key: 'about', label: t.navbar.menu.about, href: '/#about' },
     { key: 'faq', label: t.navbar.menu.faq, href: '/#faq' },
   ];
@@ -54,11 +55,14 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, [pathname]);
 
-  const activeKey = pathname === '/' ? activeSection : '';
+  const activeKey = pathname === '/portfolio' ? 'portfolio' : pathname === '/' ? activeSection : '';
 
   // Smooth-scroll for same-page hash links
   const handleNavClick = (e: React.MouseEvent, href: string) => {
-    if (pathname !== '/' || !href.startsWith('/#')) return;
+    if (pathname !== '/' || !href.startsWith('/#')) {
+      setIsOpen(false);
+      return;
+    }
     const el = document.getElementById(href.slice(2));
     if (el) {
       e.preventDefault();
@@ -102,7 +106,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-1 bg-white/40 dark:bg-white/[0.04] p-1.5 rounded-full border border-white/50 dark:border-white/10 backdrop-blur-md shadow-inner">
+        <div className="hidden md:flex items-center gap-0.5 lg:gap-1 bg-white/40 dark:bg-white/[0.04] p-1 rounded-full border border-white/50 dark:border-white/10 backdrop-blur-md shadow-inner shrink-0">
           {menuItems.map((item) => {
             const isActive = activeKey === item.key;
             return (
@@ -110,7 +114,7 @@ export default function Navbar() {
                 key={item.key}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${isActive
+                className={`relative px-3 lg:px-4 py-1.5 rounded-full text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-300 ${isActive
                   ? 'text-slate-900 dark:text-white'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
@@ -129,27 +133,27 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link href='/contact' className="bg-primary-600 backdrop-blur-md text-white text-sm font-semibold py-2.5 px-6 rounded-full transition-all duration-300 hover:bg-primary-500 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] border border-primary-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950">
+        <div className="hidden md:flex items-center gap-2 lg:gap-2.5 shrink-0">
+          <Link href='/contact' className="whitespace-nowrap bg-primary-600 backdrop-blur-md text-white text-xs lg:text-sm font-semibold py-2 px-4 lg:px-5 rounded-full transition-all duration-300 hover:bg-primary-500 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] border border-primary-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950">
             {t.navbar.cta}
           </Link>
           {/* Language Switcher */}
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300"
+            className="flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 lg:py-2 rounded-full text-xs font-bold text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300"
             aria-label="Switch language"
             title={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
           >
-            <Globe size={16} className="text-primary-500" />
+            <Globe size={15} className="text-primary-500" />
             <span>{t.navbar.switchLanguageCode}</span>
           </button>
           {/* Theme Switcher */}
           <button
             onClick={toggleTheme}
-            className="p-2.5 rounded-full text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300 hover:rotate-12"
+            className="p-2 lg:p-2.5 rounded-full text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300 hover:rotate-12"
             aria-label="Toggle Theme"
           >
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </div>
 
