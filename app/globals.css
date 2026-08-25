@@ -80,6 +80,12 @@ body {
   letter-spacing: normal !important;
 }
 
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[role="tab"] {
+  cursor: pointer;
+}
+
 /* Visible keyboard focus everywhere; components with focus-visible:ring
    utilities override this via outline-none on the ring styles. */
 :focus-visible {

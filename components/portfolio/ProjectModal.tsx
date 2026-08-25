@@ -60,7 +60,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="sticky top-0 z-20 flex items-center justify-between border-b border-slate-100 bg-white/95 px-6 py-4 backdrop-blur-md dark:border-white/10 dark:bg-slate-900/95 sm:px-8">
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-500/10 px-3 py-1 text-xs font-semibold text-primary-600 dark:bg-primary-500/20 dark:text-primary-400">
-                <Sparkles size={13} />
                 {project.categoryLabel}
               </span>
               <span className="text-xs font-medium text-slate-500 dark:text-slate-400">

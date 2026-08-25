@@ -259,11 +259,11 @@ function Services() {
         />
 
         {/* Tab bar */}
-        <div className="mt-12 flex justify-center">
+        <div className="mx-auto mt-12 flex max-w-5xl flex-wrap items-center justify-center gap-2 px-4">
           <div
             role="tablist"
             aria-label="Technical capabilities"
-            className="flex max-w-full gap-1 overflow-x-auto rounded-full border border-slate-200 bg-white p-1.5 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+            className="flex flex-wrap items-center justify-center gap-1 rounded-3xl border border-slate-200 bg-white p-1.5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:rounded-full"
           >
             {capabilities.map((capability, index) => {
               const isActive = capability.key === activeKey
@@ -279,7 +279,7 @@ function Services() {
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => handleTabSelect(capability.key)}
                   onKeyDown={(event) => onTabKeyDown(event, index)}
-                  className={`relative flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 sm:px-5 ${
+                  className={`relative flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 sm:px-5 ${
                     isActive
                       ? 'text-slate-900 dark:text-white'
                       : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'

@@ -57,7 +57,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         {/* Category & Client Badge */}
         <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-slate-950/70 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
-            <Sparkles size={13} className="text-primary-400" />
             {project.categoryLabel}
           </span>
           <span className="hidden sm:inline-flex rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[11px] font-medium text-slate-200 backdrop-blur-md">
