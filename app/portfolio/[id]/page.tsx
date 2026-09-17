@@ -19,6 +19,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { useTranslation } from '@/locales/translations';
+import { getContactInfo } from '@/lib/contact';
 import { ProjectItem } from '@/components/portfolio/ProjectCard';
 
 interface PageProps {
@@ -27,7 +28,8 @@ interface PageProps {
 
 export default function ProjectDetailPage({ params }: PageProps) {
   const { id } = use(params);
-  const { t, isRtl } = useTranslation();
+  const { t, isRtl, language } = useTranslation();
+  const contact = getContactInfo(language);
 
   const projects = (t.portfolio.projects as unknown as ProjectItem[]) || [];
   const currentIndex = projects.findIndex((p) => p.id === id);
@@ -261,7 +263,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
             </Link>
 
             <a
-              href="https://wa.me/966541897150"
+              href={contact.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-7 py-4 text-sm font-bold text-emerald-400 backdrop-blur-md transition-all duration-300 hover:bg-emerald-500/20 hover:scale-105"

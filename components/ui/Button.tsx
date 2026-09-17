@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { ArrowUpRight, SearchCheck } from 'lucide-react'
 import { useTranslation } from '@/locales/translations'
+import { localizePath } from '@/lib/navigation'
 
 /**
  * Global CTA system.
@@ -79,13 +80,13 @@ export function PrimaryCta({
   size?: ButtonSize
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
 
   return (
     <Button
       variant="primary"
       size={size}
-      href="/contact"
+      href={localizePath('/contact', language)}
       className={className}
       icon={
         <ArrowUpRight
@@ -108,14 +109,14 @@ export function SecondaryCta({
   onDark?: boolean
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
 
   return (
     <Button
       variant="secondary"
       size={size}
       onDark={onDark}
-      href="/contact#contact-form"
+      href={localizePath('/contact#contact-form', language)}
       className={className}
       icon={undefined}
     >

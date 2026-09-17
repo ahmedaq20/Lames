@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 import { Globe, Menu, Moon, Sun, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { useThemeStore } from '@/store/useThemeStore';
 import { useTranslation } from '@/locales/translations';
+import { localizePath } from '@/lib/navigation';
 
 const spySections = ['home', 'services', 'process', 'about', 'faq'];
 
@@ -18,14 +19,18 @@ export default function Navbar() {
   const { theme, toggleTheme } = useThemeStore();
   const { t, language, toggleLanguage } = useTranslation();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const isHome = pathname === '/' || pathname === '/en' || pathname === '/ar';
+  const isPortfolio = pathname === '/portfolio' || pathname === '/en/portfolio' || pathname === '/ar/portfolio';
 
   const menuItems = [
-    { key: 'home', label: t.navbar.menu.home, href: '/#home' },
-    { key: 'services', label: t.navbar.menu.services, href: '/#services' },
-    { key: 'process', label: t.navbar.menu.process, href: '/#process' },
-    { key: 'portfolio', label: t.navbar.menu.portfolio, href: '/portfolio' },
-    { key: 'about', label: t.navbar.menu.about, href: '/#about' },
-    { key: 'faq', label: t.navbar.menu.faq, href: '/#faq' },
+    { key: 'home', label: t.navbar.menu.home, href: localizePath('/', language) },
+    { key: 'services', label: t.navbar.menu.services, href: localizePath('/#services', language) },
+    { key: 'process', label: t.navbar.menu.process, href: localizePath('/#process', language) },
+    { key: 'portfolio', label: t.navbar.menu.portfolio, href: localizePath('/portfolio', language) },
+    { key: 'about', label: t.navbar.menu.about, href: localizePath('/#about', language) },
+    { key: 'faq', label: t.navbar.menu.faq, href: localizePath('/#faq', language) },
   ];
 
   const { scrollYProgress } = useScroll();
@@ -39,7 +44,7 @@ export default function Navbar() {
 
   // Scroll-spy: highlight the section currently on screen (home page only)
   useEffect(() => {
-    if (pathname !== '/') return;
+    if (!isHome) return;
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -53,21 +58,39 @@ export default function Navbar() {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, [pathname]);
+  }, [isHome]);
 
-  const activeKey = pathname === '/portfolio' ? 'portfolio' : pathname === '/' ? activeSection : '';
+  const activeKey = isPortfolio ? 'portfolio' : isHome ? activeSection : '';
 
-  // Smooth-scroll for same-page hash links
+  // Smooth-scroll for same-page hash links or scroll to top for home
   const handleNavClick = (e: React.MouseEvent, href: string) => {
-    if (pathname !== '/' || !href.startsWith('/#')) {
+    if (isHome && (href === '/' || href === '/en' || href === '/ar')) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       setIsOpen(false);
       return;
     }
-    const el = document.getElementById(href.slice(2));
+
+    const hashIndex = href.indexOf('#');
+    if (!isHome || hashIndex === -1) {
+      setIsOpen(false);
+      return;
+    }
+    const id = href.slice(hashIndex + 1);
+    const el = document.getElementById(id);
     if (el) {
       e.preventDefault();
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setIsOpen(false);
+    }
+  };
+
+  const handleLanguageToggle = () => {
+    const nextLang = language === 'ar' ? 'en' : 'ar';
+    toggleLanguage();
+    if (pathname) {
+      const nextPath = localizePath(pathname, nextLang);
+      router.push(nextPath);
     }
   };
 
@@ -86,7 +109,7 @@ export default function Navbar() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="relative flex items-center">
+        <Link href={localizePath('/', language)} className="relative flex items-center">
           <Image
             src='/images/logolightanddark.png'
             alt='Lames Logo'
@@ -134,12 +157,12 @@ export default function Navbar() {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-2 lg:gap-2.5 shrink-0">
-          <Link href='/contact' className="whitespace-nowrap bg-primary-600 backdrop-blur-md text-white text-xs lg:text-sm font-semibold py-2 px-4 lg:px-5 rounded-full transition-all duration-300 hover:bg-primary-500 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] border border-primary-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950">
+          <Link href={localizePath('/contact', language)} className="whitespace-nowrap bg-primary-600 backdrop-blur-md text-white text-xs lg:text-sm font-semibold py-2 px-4 lg:px-5 rounded-full transition-all duration-300 hover:bg-primary-500 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] border border-primary-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950">
             {t.navbar.cta}
           </Link>
           {/* Language Switcher */}
           <button
-            onClick={toggleLanguage}
+            onClick={handleLanguageToggle}
             className="flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 lg:py-2 rounded-full text-xs font-bold text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 border border-white/50 dark:border-white/10 shadow-sm backdrop-blur-md transition-all duration-300"
             aria-label="Switch language"
             title={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
@@ -160,7 +183,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
           <button
-            onClick={toggleLanguage}
+            onClick={handleLanguageToggle}
             className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-white/40 dark:bg-white/10 border border-white/50 dark:border-white/10 backdrop-blur-md shadow-sm"
             aria-label="Switch language"
           >
@@ -227,7 +250,7 @@ export default function Navbar() {
                 transition={{ duration: 0.25, delay: 0.05 + menuItems.length * 0.05 }}
               >
                 <Link
-                  href='/contact'
+                  href={localizePath('/contact', language)}
                   onClick={() => setIsOpen(false)}
                   className="block bg-primary-600 backdrop-blur-md border border-primary-500/40 text-white font-bold py-3.5 rounded-2xl mt-2 shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.3)] hover:bg-primary-500 transition-colors text-center"
                 >

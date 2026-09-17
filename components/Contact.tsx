@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { SearchCheck, Blocks, ShieldCheck, Check, AlertCircle, Loader2, type LucideIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '@/locales/translations';
+import { getContactInfo } from '@/lib/contact';
 
 interface FormData {
   fullName: string;
@@ -17,7 +18,6 @@ interface FormErrors {
   message?: string;
 }
 
-const WHATSAPP_NUMBER = '966541897150';
 // Laravel API endpoint. Prefer the full endpoint when provided, otherwise build it
 // from NEXT_PUBLIC_BASE_API_URL and the Laravel contact route.
 const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL?.replace(/\/+$/, '');
@@ -27,6 +27,7 @@ const CONTACT_ENDPOINT =
   (BASE_API_URL ? `${BASE_API_URL}${CONTACT_ROUTE.startsWith('/') ? CONTACT_ROUTE : `/${CONTACT_ROUTE}`}` : undefined);
 
 function buildWhatsAppUrl(data: FormData, service: string, isAr: boolean) {
+  const contact = getContactInfo(isAr ? 'ar' : 'en');
   const greeting = isAr ? `مرحباً لميس، أنا ${data.fullName}.` : `Hi Lames, I'm ${data.fullName}.`;
   const serviceLabel = isAr ? `الخدمة المطلوبة: ${service}` : `Service: ${service}`;
   const emailLabel = isAr ? `البريد الإلكتروني: ${data.email}` : `Email: ${data.email}`;
@@ -38,7 +39,7 @@ function buildWhatsAppUrl(data: FormData, service: string, isAr: boolean) {
     '',
     data.message,
   ].join('\n');
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(text)}`;
 }
 
 const detailIcons: LucideIcon[] = [SearchCheck, Blocks, ShieldCheck];

@@ -3,12 +3,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from '@/locales/translations'
-
-const WHATSAPP_NUMBER = '966541897150'
+import { getContactInfo } from '@/lib/contact'
 
 function FloatingWhatsApp() {
-  const { t } = useTranslation()
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.floatingWhatsApp.defaultMessage)}`
+  const { t, language } = useTranslation()
+  const contact = getContactInfo(language)
+  const whatsappUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(t.floatingWhatsApp.defaultMessage)}`
 
   return (
     <motion.a
@@ -31,7 +31,7 @@ function FloatingWhatsApp() {
       </svg>
 
       {/* Tooltip */}
-      <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white opacity-0 shadow-xl transition-opacity duration-300 group-hover:opacity-100 dark:bg-white dark:text-slate-900 rtl:right-auto rtl:left-full rtl:ml-3 rtl:mr-0">
+      <span className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 mr-3 whitespace-nowrap rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white opacity-0 shadow-xl transition-opacity duration-300 group-hover:opacity-100 dark:bg-white dark:text-slate-900">
         {t.floatingWhatsApp.tooltip}
       </span>
     </motion.a>

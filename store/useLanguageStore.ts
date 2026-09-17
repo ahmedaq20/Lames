@@ -29,11 +29,23 @@ export const useLanguageStore = create<LanguageStore>((set, get) => ({
 
   initializeLanguage: () => {
     if (typeof window === 'undefined') return;
-    const savedLang = localStorage.getItem('language') as Language | null;
-    const initialLang: Language = savedLang === 'en' ? 'en' : 'ar'; // Default to Arabic if not specified
+
+    // Check URL pathname first for explicit /en or /ar prefix
+    const path = window.location.pathname;
+    let initialLang: Language;
+
+    if (path === '/en' || path.startsWith('/en/')) {
+      initialLang = 'en';
+    } else if (path === '/ar' || path.startsWith('/ar/')) {
+      initialLang = 'ar';
+    } else {
+      const savedLang = localStorage.getItem('language') as Language | null;
+      initialLang = savedLang === 'en' ? 'en' : 'ar';
+    }
 
     document.documentElement.setAttribute('lang', initialLang);
     document.documentElement.setAttribute('dir', initialLang === 'ar' ? 'rtl' : 'ltr');
+    localStorage.setItem('language', initialLang);
     set({ language: initialLang });
   }
 }));

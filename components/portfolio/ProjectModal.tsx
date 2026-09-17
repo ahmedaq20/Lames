@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, AlertCircle, Wrench, Sparkles, MessageCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useTranslation } from '@/locales/translations';
+import { getContactInfo } from '@/lib/contact';
 import { ProjectItem } from './ProjectCard';
 
 interface ProjectModalProps {
@@ -14,7 +15,8 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
-  const { t, isRtl } = useTranslation();
+  const { t, isRtl, language } = useTranslation();
+  const contact = getContactInfo(language);
 
   // Handle ESC key to close modal & lock body scroll
   useEffect(() => {
@@ -162,13 +164,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </p>
             <div className="flex w-full sm:w-auto items-center gap-2">
               <a
-                href="https://wa.me/966541897150"
+                href={contact.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-1 sm:flex-none items-center justify-center gap-1.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-2.5 text-xs font-bold text-emerald-600 transition-colors hover:bg-emerald-500/20 dark:text-emerald-400"
               >
                 <MessageCircle size={15} />
-                <span>واتساب</span>
+                <span>{isRtl ? 'واتساب' : 'WhatsApp'}</span>
               </a>
               <Link
                 href="/contact"

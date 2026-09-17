@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, MessageCircle, Sparkles } from 'lucide-react';
 import { useTranslation } from '@/locales/translations';
+import { getContactInfo } from '@/lib/contact';
 
 export default function PortfolioCTA() {
-  const { t, isRtl } = useTranslation();
+  const { t, isRtl, language } = useTranslation();
+  const contact = getContactInfo(language);
 
   return (
     <section className="relative w-full overflow-hidden py-20 md:py-32">
@@ -44,7 +46,7 @@ export default function PortfolioCTA() {
             </Link>
 
             <a
-              href="https://wa.me/966541897150"
+              href={contact.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-7 py-4 text-sm font-bold text-emerald-400 backdrop-blur-md transition-all duration-300 hover:bg-emerald-500/20 hover:scale-105"

@@ -125,7 +125,8 @@ export default function RootLayout({
             __html: `(function(){try{
               var t=localStorage.getItem('theme');
               if(t==='dark'){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}
-              var l=localStorage.getItem('language');
+              var p=window.location.pathname;
+              var l=(p==='/en'||p.indexOf('/en/')===0)?'en':((p==='/ar'||p.indexOf('/ar/')===0)?'ar':localStorage.getItem('language'));
               if(l==='en'){
                 document.documentElement.setAttribute('lang','en');
                 document.documentElement.setAttribute('dir','ltr');
