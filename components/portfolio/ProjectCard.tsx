@@ -16,7 +16,7 @@ export interface ProjectItem {
   summary: string;
   image: string;
   tags: string[];
-  metrics: { label: string; value: string }[];
+  metrics?: { label: string; value: string }[];
   challenge: string;
   solution: string;
   results: string[];
@@ -86,20 +86,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <p className="mb-6 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {project.summary}
         </p>
-
-        {/* Key Metrics Pills */}
-        <div className="mb-6 grid grid-cols-3 gap-2 rounded-2xl border border-slate-100 bg-slate-50/80 p-3 dark:border-white/5 dark:bg-white/[0.02]">
-          {project.metrics.map((metric) => (
-            <div key={metric.label} className="text-center">
-              <span className="block font-display text-base font-bold text-primary-600 dark:text-primary-400">
-                {metric.value}
-              </span>
-              <span className="block text-[10px] font-medium text-slate-500 dark:text-slate-400 truncate">
-                {metric.label}
-              </span>
-            </div>
-          ))}
-        </div>
 
         {/* Tech Stack Tags */}
         <div className="mb-6 flex flex-wrap gap-1.5">

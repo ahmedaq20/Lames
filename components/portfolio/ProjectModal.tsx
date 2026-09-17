@@ -94,28 +94,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
             </div>
 
-            {/* Impact Metrics Banner */}
-            <div className="rounded-2xl border border-primary-500/20 bg-primary-50/50 p-5 dark:border-primary-500/30 dark:bg-primary-950/20">
-              <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">
-                {t.portfolio.ui.keyMetrics}
-              </h3>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                {project.metrics.map((metric) => (
-                  <div
-                    key={metric.label}
-                    className="rounded-xl border border-white/60 bg-white/80 p-4 text-center shadow-xs dark:border-white/5 dark:bg-white/[0.04]"
-                  >
-                    <div className="font-display text-2xl font-extrabold text-primary-600 dark:text-primary-400 sm:text-3xl">
-                      {metric.value}
-                    </div>
-                    <div className="mt-1 text-xs font-medium text-slate-600 dark:text-slate-400">
-                      {metric.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* Challenge & Solution 2-Column Grid */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {/* Challenge */}

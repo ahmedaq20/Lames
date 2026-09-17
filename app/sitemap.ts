@@ -17,12 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     ...[
-      'b2b-commerce',
-      'fintech-app',
-      'n8n-automation',
-      'cloud-devsecops',
-      'headless-media',
-      'logistics-delivery',
+      'hemma-platform',
+      'nexar-hr-system',
     ].map((slug) => ({
       url: `${siteUrl}/portfolio/${slug}`,
       lastModified: new Date(),

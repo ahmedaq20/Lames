@@ -54,7 +54,7 @@ export default function ProjectDetailPage({ params }: PageProps) {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="mb-8 flex flex-wrap items-center justify-between gap-4"
+          className="mb-8"
         >
           <Link
             href="/portfolio"
@@ -63,15 +63,6 @@ export default function ProjectDetailPage({ params }: PageProps) {
             {isRtl ? <ArrowRight size={15} /> : <ArrowLeft size={15} />}
             <span>{isRtl ? 'العودة إلى معرض الأعمال' : 'Back to Portfolio'}</span>
           </Link>
-
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary-500/20 bg-primary-500/10 px-3.5 py-1 text-xs font-semibold text-primary-600 dark:text-primary-400">
-              {project.categoryLabel}
-            </span>
-            <span className="rounded-full border border-slate-200/80 bg-slate-100/80 px-3 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
-              {project.client}
-            </span>
-          </div>
         </motion.div>
 
         {/* Project Header */}
@@ -105,34 +96,6 @@ export default function ProjectDetailPage({ params }: PageProps) {
             className="object-cover object-top transition-transform duration-700 group-hover:scale-102"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent" />
-        </motion.div>
-
-        {/* Key Metrics Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 overflow-hidden rounded-3xl border border-primary-500/20 bg-primary-50/60 p-8 shadow-sm dark:border-primary-500/30 dark:bg-primary-950/20 md:p-10"
-        >
-          <h3 className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-primary-600 dark:text-primary-400">
-            {t.portfolio.ui.keyMetrics}
-          </h3>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {project.metrics.map((metric) => (
-              <div
-                key={metric.label}
-                className="rounded-2xl border border-white/80 bg-white/90 p-6 text-center shadow-xs backdrop-blur-md dark:border-white/5 dark:bg-white/[0.04]"
-              >
-                <div className="font-display text-3xl font-extrabold tracking-tight text-primary-600 dark:text-primary-400 md:text-4xl">
-                  {metric.value}
-                </div>
-                <div className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">
-                  {metric.label}
-                </div>
-              </div>
-            ))}
-          </div>
         </motion.div>
 
         {/* Challenge & Solution Grid */}
